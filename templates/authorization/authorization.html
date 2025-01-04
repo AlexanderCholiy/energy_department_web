@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Авторизация</title>
+  <link rel="shortcut icon" href="{{ url_for('static', path='images/favicon.png') }}" type="image/x-icon">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/base.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/spinner_overlay.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/authorization.css') }}">
+</head>
+
+<body>
+  {% include 'includes/spinner_overlay.html' %}
+  <div class="wrapper">
+    <form method="post" action="{{ urls.token }}">
+      <h1>Авторизация</h1>
+      <div class="input-box">
+        <input type="email" placeholder="E-mail" id="useremail" name="useremail"
+          value="{{ request.cookies.get('saved_useremail', '') }}" required>
+        <i class='bx bx-user'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" placeholder="Password" id="password" name="password"
+          value="{{ request.cookies.get('saved_password', '') }}" required>
+        <i class='bx bxs-lock-alt' id="hide-password"></i>
+      </div>
+      <div class="remember">
+        <label for=""><input type="checkbox" id="remember_me" name="remember_me" {% if
+            request.cookies.get("remember_me")=="true" %} checked {% endif %}>запомнить</label>
+        <p>{% if error %}{{ error }}{% endif %}</p>
+      </div>
+
+      <button type="submit" class="btn">Войти</button>
+
+    </form>
+  </div>
+  <script src="{{ url_for('static', path='js/spinner_overlay.js') }}"></script>
+  <script src="{{ url_for('static', path='js/hide_password.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Raleway:ital,wght@0,100..900;1,100..900&family=Tektur:wght@400..900&display=swap');
+
+:root {
+    --transition: 0.5s ease;
+
+    --light-background-color: rgb(240, 240, 240);
+    --light-add-background-color: rgb(215, 215, 215);
+    --light-color: rgb(240, 240, 240);
+    --light-add-color: rgb(215, 215, 215);
+    
+    --dark-background-color: black;
+    --dark-add-background-color: rgb(30, 30, 50);
+    --dark-color: black;
+    --dark-add-color: rgb(30, 30, 30);
+    
+    
+    --light-red-color: rgb(220, 20, 60);
+    --light-green-color: rgb(0, 165, 0);
+    --light-blue-color: rgb(65, 105, 225);
+    --light-yellow-color: rgb(255, 215, 0);
+    --light-magenta-color: rgb(155, 0, 155);
+    --light-cyan-color: rgb(0, 125, 125);
+
+    --dark-red-color: rgb(220, 20, 60);
+    --dark-green-color: rgb(0, 175, 76);
+    --dark-blue-color: rgb(65, 105, 225);
+    --dark-yellow-color: rgb(255, 215, 0);
+    --dark-magenta-color: rgb(125, 0, 175);
+    --dark-cyan-color: rgb(0, 100, 100);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+* {
+    font-family: "Tektur", sans-serif;
+}
+
+body {
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    background-color: var(--light-background-color);
+    color: var(--dark-color);
+    transition: 
+        background-color var(--transition), 
+        color var(--transition);
+}
+
+/* WebKit-скроллбары (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-add-background-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--dark-add-color);
+    border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-color);
+}
