@@ -1,21 +1,17 @@
 import os
 import sys
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import sessionmaker
 
 CURRENT_DIR: str = os.path.dirname(__file__)
-sys.path.append(os.path.join(CURRENT_DIR, '..', '..', '..'))
-from settings.config import db_settings  # noqa: E402
+sys.path.append(os.path.join(CURRENT_DIR, '..'))
+from app.models.models_user import Base, User  # noqa: E402
 
+DATABASE_URL = f'sqlite:///{os.path.join(CURRENT_DIR, "uptc.db")}'
 
-SQLALCHEMY_DATABASE_URL = (
-    f'postgresql://{db_settings.DB_USER}:{db_settings.DB_PSWD}' +
-    f'@{db_settings.DB_HOST}:{db_settings.DB_PORT}/{db_settings.DB_NAME_WEB}'
-)
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
 
 
 def get_db():
@@ -24,3 +20,17 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+if __name__ == '__main__':
+    Base.metadata.create_all(engine)
+    new_user = User(
+        useremail='user@example.com',
+        hashed_password=(
+            '$argon2id$v=19$m=65536,t=3,p=4$xHivldKa877XmnMOwVjrnQ$fjZJnZp' +
+            'xyizPWY4tXY6R+5jrL/r5TbJRfK2zGJN8/7I'
+        )
+    )
+    db = next(get_db())
+    db.add(new_user)
+    db.commit()

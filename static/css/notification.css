@@ -1,0 +1,36 @@
+.alert {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    padding: 15px 20px;
+    border-radius: 8px;
+    background-color: var(--dark-add-background-color);
+    color: var(--light-color);
+    opacity: 0;
+    transform: translateY(20px);
+    z-index: 1000;
+    transition: opacity var(--transition), transform var(--transition);
+}
+
+.alert.success {
+    color: var(--dark-green-color);
+    border: 1px solid var(--dark-green-color);
+}
+
+.alert.error {
+    color: var(--dark-red-color);
+    border: 1px solid var(--dark-red-color);
+}
+
+.alert.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+
+/* Анимация исчезновения */
+@keyframes slideOutDown {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}

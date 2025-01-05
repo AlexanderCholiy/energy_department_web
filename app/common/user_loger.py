@@ -1,5 +1,5 @@
-import os
 import logging
+import os
 
 LOG_DIR: str = os.path.join(os.path.dirname(__file__), '..', '..', 'log')
 LOG_FILE_PATH: str = os.path.join(LOG_DIR, 'users.log')

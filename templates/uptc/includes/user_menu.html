@@ -1,0 +1,62 @@
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2 class="modal-title">Редактировать профиль</h2>
+        <form action="{{ urls.user }}" method="POST" id="profileForm">
+            <div class="modal-form-container">
+                <!-- Имя -->
+                <div class="modal-form">
+                    <label for="firstName" class="form-label">Имя</label>
+                    <input type="text" class="form-control" id="firstName" name="first_name" 
+                        value="{{ user.first_name or '' }}" 
+                        pattern="^[A-Za-zА-Яа-яЁё]+$" 
+                        maxlength="25"
+                        title="Введите корректное имя (только буквы без пробелов)" 
+                        oninput="checkFormValidity()" required>
+                </div>
+                <!-- Фамилия -->
+                <div class="modal-form">
+                    <label for="lastName" class="form-label">Фамилия</label>
+                    <input type="text" class="form-control" id="lastName" name="last_name" 
+                        value="{{ user.last_name or '' }}" 
+                        pattern="^[A-Za-zА-Яа-яЁё]+$" 
+                        maxlength="25"
+                        title="Введите корректную фамилию (только буквы без пробелов)" 
+                        oninput="checkFormValidity()" required>
+                </div>
+                <!-- Текущий пароль -->
+                <div class="modal-form">
+                    <label for="currentPassword" class="form-label">Текущий пароль</label>
+                    <input type="password" class="form-control" id="currentPassword" name="current_password" 
+                        maxlength="25"
+                        placeholder="Введите текущий пароль" 
+                        required oninput="checkFormValidity()">
+                    <i class='bx bxs-lock-alt' id="hide-password-current" style="cursor: pointer;"></i>
+                </div>
+                <!-- Новый пароль -->
+                <div class="modal-form">
+                    <label for="password" class="form-label">Новый пароль</label>
+                    <input type="password" class="form-control" id="password" name="password" 
+                        minlength="10" 
+                        maxlength="25"
+                        placeholder="Введите новый пароль" 
+                        oninput="checkFormValidity()">
+                    <i class='bx bxs-lock-alt' id="hide-password-new" style="cursor: pointer;"></i>
+                </div>
+                <!-- Подтверждение пароля -->
+                <div class="modal-form">
+                    <label for="confirmPassword" class="form-label">Подтвердите пароль</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirm_password" 
+                        minlength="10" 
+                        maxlength="25"
+                        placeholder="Повторите новый пароль" 
+                        oninput="checkFormValidity()">
+                    <i class='bx bxs-lock-alt' id="hide-password-confirm" style="cursor: pointer;"></i>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-button" id="cancelButton">Отмена</button>
+                <button type="submit" class="save-button" id="saveButton">Сохранить изменения</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+header {
+    background-image: url('../images/background.png');
+    background-size: cover;
+    background-position: center;
+    padding: 10px 20px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#SearchField {
+    flex-grow: 1;
+    padding: 6px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: var(--dark-color);
+}
+
+#SearchField::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+#SearchField:hover {
+    background-color: var(--light-background-color);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+#SearchField:focus {
+    outline: none;
+    border: 1px solid var(--light-blue-color);
+}
+
+.header-side-menu {
+    align-items: center;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.header-button {
+    background: none;
+    border: none;
+    color: var(--dark-add-color);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    transition: color var(--transition);
+}
+
+.header-button:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: var(--dark-color);
+}
+
+.site {
+    color: var(--dark-add-color);
+    font-weight: 500;
+    padding-bottom: 3px;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.site:hover {
+    color: var(--dark-color);
+}
+
+.site:active,
+.header-button:active {
+    transform: scale(0.95);
+}
+
+.user-menu {
+    position: relative; /* Для позиционирования выпадающего меню */
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: var(--light-add-background-color);
+    color: var(--dark-add-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.dropdown ul {
+    list-style-type: none;
+    padding: 6px 2px;
+    margin: 0;
+}
+
+.dropdown ul li {
+    margin: 2px;
+}
+
+.dropdown ul li a {
+    text-decoration: none;
+    color: var(--dark-add-color);
+    padding: 5px;
+    display: block;
+    border-radius: 8px;
+    transition: background-color var(--transition), color var(--transition);
+    cursor: pointer;
+}
+
+.dropdown ul li a:hover {
+    background-color: var(--light-color);
+    color: var(--dark-add-color);
+}
+
+.dropdown ul li a:active {
+    transform: scale(0.95);
+}
+
+.dropdown.show {
+    display: block;
+}

@@ -11,4 +11,3 @@ document.getElementById('hide-password').addEventListener('click', function() {
         icon.className = 'bx bxs-lock-alt'; // Поменять иконку на закрытую
     }
 });
-

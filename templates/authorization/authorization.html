@@ -31,7 +31,7 @@
       <div class="remember">
         <label for=""><input type="checkbox" id="remember_me" name="remember_me" {% if
             request.cookies.get("remember_me")=="true" %} checked {% endif %}>запомнить</label>
-        <p>{% if error %}{{ error }}{% endif %}</p>
+        <p class="error">{% if error %}{{ error }}{% endif %}</p>
       </div>
 
       <button type="submit" class="btn">Войти</button>

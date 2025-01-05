@@ -68,6 +68,7 @@ body {
     font-size: 14.5px;
     margin: -10px 0 13px; 
     margin-left: 7px; 
+    gap: 20px;
 }
 
 .remember label {
@@ -109,4 +110,8 @@ body {
 
 #hide-password {
     cursor: pointer;
+}
+
+.error {
+    color: var(--light-red-color);
 }

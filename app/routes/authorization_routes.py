@@ -1,24 +1,18 @@
 import os
-import sys
 from datetime import timedelta
 
-from fastapi import APIRouter, Request, status, Form, Depends
-from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi import APIRouter, Depends, Form, Request, status
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
+from app.common.authorization import (authenticate_user, create_access_token,
+                                      get_current_user)
+from database.db_users import get_db
+from settings.config import web_settings
+from settings.urls import urls
+
 CURRENT_DIR: str = os.path.dirname(__file__)
-sys.path.append(
-    os.path.abspath(os.path.join(CURRENT_DIR, '..', '..', '..'))
-)
-from settings.config import web_settings  # noqa: E402
-from app.common.authorization import (  # noqa: E402
-    authenticate_user, create_access_token, get_current_user
-)
-from database.db_users import get_db  # noqa: E402
-from settings.urls import urls  # noqa: E402
-
-
 router = APIRouter()
 
 directory: str = os.path.join(
@@ -27,7 +21,7 @@ directory: str = os.path.join(
 templates = Jinja2Templates(directory=directory)
 
 
-@router.get(urls.index, response_class=RedirectResponse)
+@router.get(urls.index)
 async def index(
     request: Request, token: str | None = None, db: Session = Depends(get_db)
 ) -> RedirectResponse:
@@ -40,7 +34,7 @@ async def index(
     token = request.cookies.get('access_token')
     if token:
         user = await get_current_user(token, db)
-        if user and user.is_active:
+        if user:
             return RedirectResponse(
                 url=urls.home_uptc, status_code=status.HTTP_303_SEE_OTHER
             )
@@ -61,7 +55,7 @@ async def authorize(request: Request) -> HTMLResponse:
     return templates.TemplateResponse('authorization.html', context)
 
 
-@router.post(urls.token, response_class=RedirectResponse)
+@router.post(urls.token)
 async def login_for_access_token(
     request: Request,
     useremail: str = Form(...),
@@ -97,7 +91,7 @@ async def login_for_access_token(
         minutes=web_settings.WEB_SECURITY_ACCESS_TOKEN_EXPIRE_SECONDS
     )
     access_token = create_access_token(
-        user_data={'sub': user['useremail']},
+        user_data=user,
         expires_delta=access_token_expires
     )
 
@@ -131,7 +125,7 @@ async def login_for_access_token(
 
 
 @router.get(urls.logout)
-@router.post(urls.logout, response_class=RedirectResponse)
+@router.post(urls.logout)
 async def logout(request: Request) -> RedirectResponse:
     """
     Выход пользователя из системы, удаление токена и перенаправление на

@@ -1,7 +1,6 @@
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 
-
 pwd_context = CryptContext(schemes=['argon2'], deprecated='auto')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
@@ -22,6 +21,6 @@ def get_password_hash(password: str) -> str:
 
 
 if __name__ == '__main__':
-    password = 'qwerty2'
+    password = 'qwerty16'
     hashed_password = get_password_hash(password=password)
     print(hashed_password)

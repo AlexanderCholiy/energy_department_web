@@ -1,62 +1,35 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UPTC</title>
-  <link rel="shortcut icon" href="{{ url_for('static', path='images/favicon.png') }}" type="image/x-icon">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/base.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/spinner_overlay.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/menu.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', path='images/favicon.png') }}" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/base.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/spinner_overlay.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/user_menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/notification.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/side_menu.css') }}"> -->
 </head>
-
 <body>
     {% include '/includes/spinner_overlay.html' %}
-    <div class="container">
-        <div class="sidebar" id="sidebar">
-            <button class="toggle-btn" id="toggle-btn">&#9776;</button>
-            <ul class="menu">
-                <li>
-                    <a href="#" class="menu-item">Главная</a>
-                </li>
-                <li>
-                    <a href="#" class="menu-item">Услуги</a>
-                    <ul class="submenu">
-                        <li><a href="#">Услуга 1</a></li>
-                        <li><a href="#">Услуга 2</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="menu-item">О нас</a>
-                </li>
-                <li>
-                    <a href="#" class="menu-item">Контакты</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="main-content">
-            <div class="search-bar">
-                <button class="icon-btn" id="search-btn">&#128269;</button>
-                <input type="text" placeholder="Поиск...">
-                <button class="icon-btn" id="search-clear-btn">&#10006;</button>
-            </div>
-            <div class="content">
-                <h1>Добро пожаловать!</h1>
-                <p>Это пример страницы с боковым меню.</p>
-            </div>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <p>© 2023 Ваша Компания. Все права защищены.</p>
-    </footer>
-
+    {% include '/includes/header.html' %}
+    {% include '/includes/user_menu.html' %}
+    {% include '/includes/notification.html' %}
+    {% include '/includes/side_menu.html' %}
+    <main>
+        <section>
+            <h1>Основное содержимое</h1>
+        </section>
+    </main>
+    {% include '/includes/footer.html' %}
     <script src="{{ url_for('static', path='js/spinner_overlay.js') }}"></script>
-    <script src="{{ url_for('static', path='js/menu.js') }}"></script>
+    <script src="{{ url_for('static', path='js/user_button.js') }}"></script>
+    <script src="{{ url_for('static', path='js/hide_user_password.js') }}"></script>
+    <script src="{{ url_for('static', path='js/check_user_input.js') }}"></script>
+    <script src="{{ url_for('static', path='js/notification.js') }}"></script>
+    <script src="{{ url_for('static', path='js/side_menu.js') }}"></script>
 </body>
-
 </html>

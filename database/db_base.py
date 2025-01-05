@@ -1,16 +1,14 @@
-import os
-import sys
-from typing import Union, Literal, List
-from contextlib import closing
 import logging
+import os
+from contextlib import closing
+from typing import List, Literal, Union
 
 import psycopg2
-from colorama import Style, Fore, init
+from colorama import Fore, Style, init
 
-CURRENT_DIR: str = os.path.dirname(__file__)
-sys.path.append(os.path.abspath(os.path.join(CURRENT_DIR, '..')))
 from settings.config import db_settings  # noqa: E402
 
+CURRENT_DIR: str = os.path.dirname(__file__)
 
 init(autoreset=True)
 

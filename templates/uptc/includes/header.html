@@ -1,0 +1,22 @@
+<header>
+    <div class="header-container">
+        <div class="header-side-menu">
+            <button class="header-button" id="sidemenuButton">
+                <i class='bx bx-menu'></i>
+            </button>
+            <a class="site" href="{{ urls.home_uptc }}">UPTC</a>
+        </div>
+        <input type="text" id="SearchField" placeholder="Поиск...">
+        <div class="user-menu">
+            <button class="header-button" id="userButton" title="{{ user.useremail }}">
+                <i class='bx bx-user'></i>
+            </button>
+            <div class="dropdown" id="userDropdownMenu">
+                <ul>
+                    <li><a id="openModal" class="link" role="button">Профиль</a></li>
+                    <li><a href="{{ urls.logout }}">Выход</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

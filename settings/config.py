@@ -2,13 +2,12 @@ import os
 
 from dotenv import load_dotenv
 
-
 CURRENT_DIR: str = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH: str = os.path.join(CURRENT_DIR, '.env')
 load_dotenv(ENV_PATH)
 
 
-class DB_SETTINGS:
+class DBSet:
     """Параметры подключения к БД."""
     DB_HOST: str = os.getenv('DB_HOST')
     DB_PORT: int = int(os.getenv('DB_PORT'))
@@ -19,7 +18,7 @@ class DB_SETTINGS:
     DB_NAME_WEB: str = os.getenv('DB_NAME_WEB')
 
 
-class WEB_SETTINGS:
+class WebSet:
     """Параметры подключения приложения и настройки безопасности."""
     WEB_HOST: str = os.getenv('WEB_HOST')
     WEB_PORT: int = int(os.getenv('WEB_PORT'))
@@ -33,5 +32,5 @@ class WEB_SETTINGS:
     )
 
 
-db_settings = DB_SETTINGS()
-web_settings = WEB_SETTINGS()
+db_settings = DBSet()
+web_settings = WebSet()
