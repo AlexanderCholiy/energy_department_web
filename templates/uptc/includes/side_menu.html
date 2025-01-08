@@ -1,11 +1,35 @@
-<aside class="side_menu">
+<aside class="side_menu" id="sideMenu">
     <nav>
         <ul>
-            <li><a href="#">Пункт 1</a></li>
-            <li><a href="#">Пункт 2</a></li>
-            <li><a href="#">Пункт 3</a></li>
-            <li><a href="#">Пункт 4</a></li>
-            <li><a href="#">Пункт 5</a></li>
+            <li>
+                <a class="menu-item {% if current_path in [urls.uptc_claims_all, urls.uptc_claims_mosoblenergo, urls.uptc_claims_portal, urls.uptc_claims_tatarstan, urls.uptc_claims_oboronenergo, urls.uptc_claims_rzd, urls.uptc_claims_rossetimr] %}active{% endif %}" data-target="applicationsSubmenu">
+                    <i class='bx bx-folder'></i>
+                    <span class="menu-text">Заявки</span>
+                    <i class='bx bx-chevron-down toggle-icon' data-target="applicationsSubmenu"></i>
+                </a>
+                <ul class="submenu" id="applicationsSubmenu">
+                    <li><a href="{{ urls.uptc_claims_all }}" class="{% if current_path == urls.uptc_claims_all %}active{% endif %}">Все</a></li>
+                    <li><a href="{{ urls.uptc_claims_mosoblenergo }}" class="{% if current_path == urls.uptc_claims_mosoblenergo %}active{% endif %}">Мособлэнерго</a></li>
+                    <li><a href="{{ urls.uptc_claims_portal }}" class="{% if current_path == urls.uptc_claims_portal %}active{% endif %}">Портал ТП</a></li>
+                    <li><a href="{{ urls.uptc_claims_tatarstan }}" class="{% if current_path == urls.uptc_claims_tatarstan %}active{% endif %}">СК Татарстан</a></li>
+                    <li><a href="{{ urls.uptc_claims_oboronenergo }}" class="{% if current_path == urls.uptc_claims_oboronenergo %}active{% endif %}">АО Оборонэнерго</a></li>
+                    <li><a href="{{ urls.uptc_claims_rzd }}" class="{% if current_path == urls.uptc_claims_rzd %}active{% endif %}">ОАО РЖД</a></li>
+                    <li><a href="{{ urls.uptc_claims_rossetimr }}" class="{% if current_path == urls.uptc_claims_rossetimr %}active{% endif %}">Россети МР</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="menu-item {% if current_path in [urls.uptc_appeals_all, urls.uptc_appeals_portal, urls.uptc_appeals_oboronenergo, urls.uptc_appeals_rossetimr] %}active{% endif %}" data-target="requestsSubmenu">
+                    <i class='bx bx-envelope'></i>
+                    <span class="menu-text">Обращения</span>
+                    <i class='bx bx-chevron-down toggle-icon' data-target="requestsSubmenu"></i>
+                </a>
+                <ul class="submenu" id="requestsSubmenu">
+                    <li><a href="{{ urls.uptc_appeals_all }}" class="{% if current_path == urls.uptc_appeals_all %}active{% endif %}">Все</a></li>
+                    <li><a href="{{ urls.uptc_appeals_portal }}" class="{% if current_path == urls.uptc_appeals_portal %}active{% endif %}">Портал ТП</a></li>
+                    <li><a href="{{ urls.uptc_appeals_oboronenergo }}" class="{% if current_path == urls.uptc_appeals_oboronenergo %}active{% endif %}">АО Оборонэнерго</a></li>
+                    <li><a href="{{ urls.uptc_appeals_rossetimr }}" class="{% if current_path == urls.uptc_appeals_rossetimr %}active{% endif %}">Россети МР</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </aside>

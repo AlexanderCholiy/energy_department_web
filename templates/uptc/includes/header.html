@@ -6,7 +6,14 @@
             </button>
             <a class="site" href="{{ urls.home_uptc }}">UPTC</a>
         </div>
-        <input type="text" id="SearchField" placeholder="Поиск...">
+        <form action="{{ current_path }}" method="POST" id="searchForm" class="search-form">
+            <div class="search-input-container">
+                <input type="text" id="SearchField" name="search_query" placeholder="Поиск..." value="{{ search_query | default('') }}">
+                <button type="submit" class="search-button" title="Поиск">
+                    <i class='bx bx-search'></i>
+                </button>
+            </div>
+        </form>
         <div class="user-menu">
             <button class="header-button" id="userButton" title="{{ user.useremail }}">
                 <i class='bx bx-user'></i>

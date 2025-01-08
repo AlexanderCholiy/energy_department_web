@@ -2,24 +2,49 @@ header {
     background-image: url('../images/background.png');
     background-size: cover;
     background-position: center;
-    padding: 10px 20px;
+    padding: 10px;
+    height: 30px;
+    position: relative;
+    border-bottom: 1px solid var(--light-add-color);
+    z-index: 1;
 }
 
 .header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0;
+}
+
+.search-input-container {
+    position: relative;
+    flex-grow: 1;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+@media (max-width: 700px) {
+    .search-input-container {
+        max-width: 300px;
+    }
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 #SearchField {
-    flex-grow: 1;
-    padding: 6px;
-    margin: 0 10px;
+    padding: 6px 40px; 
     border: none;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: var(--dark-color);
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 #SearchField::placeholder {
@@ -36,11 +61,31 @@ header {
     border: 1px solid var(--light-blue-color);
 }
 
+.search-button {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--dark-add-color);
+    padding: 0;
+}
+
+.search-button:hover {
+    color: var(--dark-color);
+}
+
+.search-button:focus {
+    outline: none;
+}
+
 .header-side-menu {
     align-items: center;
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 10px;
 }
 
 .header-button {
@@ -76,7 +121,8 @@ header {
 }
 
 .user-menu {
-    position: relative; /* Для позиционирования выпадающего меню */
+    position: relative;
+    margin-left: 20px;
 }
 
 .dropdown {
@@ -105,14 +151,14 @@ header {
     color: var(--dark-add-color);
     padding: 5px;
     display: block;
-    border-radius: 8px;
+    border-radius: 5px;
     transition: background-color var(--transition), color var(--transition);
     cursor: pointer;
 }
 
 .dropdown ul li a:hover {
     background-color: var(--light-color);
-    color: var(--dark-add-color);
+    color: var(--dark-blue-color);
 }
 
 .dropdown ul li a:active {

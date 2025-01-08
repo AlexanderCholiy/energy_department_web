@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Raleway:ital,wght@0,100..900;1,100..900&family=Tektur:wght@400..900&display=swap');
 
 :root {
-    --transition: 0.5s ease;
+    --transition: 0.5s linear;
 
     --light-background-color: rgb(240, 240, 240);
     --light-add-background-color: rgb(210, 210, 210);
@@ -9,13 +9,13 @@
     --light-add-color: rgb(180, 180, 180);
     
     --dark-background-color: black;
-    --dark-add-background-color: rgb(30, 30, 50);
+    --dark-add-background-color: rgb(30, 30, 30);
     --dark-color: black;
     --dark-add-color: rgb(30, 30, 30);
     
     --light-red-color: rgb(220, 20, 60);
     --light-green-color: rgb(0, 165, 0);
-    --light-blue-color: rgb(65, 105, 225);
+    --light-blue-color: rgb(0, 123, 255);
     --light-yellow-color: rgb(255, 215, 0);
     --light-magenta-color: rgb(155, 0, 155);
     --light-cyan-color: rgb(0, 125, 125);
@@ -44,7 +44,7 @@ body {
     font-weight: 400;
     font-style: normal;
     font-variation-settings: "wdth" 100;
-    background-color: var(--light-background-color);
+    background-color: var(--light-add-background-color);
     color: var(--dark-color);
     transition: 
         background-color var(--transition), 

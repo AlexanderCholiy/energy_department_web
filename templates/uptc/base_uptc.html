@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', path='images/favicon.png') }}" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/base.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/spinner_overlay.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/user_menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/notification.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/footer.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/side_menu.css') }}">
+    {% block extra_styles %}{% endblock %}
+</head>
+<body>
+    {% include '/includes/spinner_overlay.html' %}
+    {% include '/includes/header.html' %}
+    {% include '/includes/user_menu.html' %}
+    {% include '/includes/notification.html' %}
+    {% include '/includes/side_menu.html' %}
+    <main id="mainContent">
+        {% block body %}{% endblock %}
+    </main>
+    {% include '/includes/footer.html' %}
+    <script src="{{ url_for('static', path='js/spinner_overlay.js') }}"></script>
+    <script src="{{ url_for('static', path='js/user_button.js') }}"></script>
+    <script src="{{ url_for('static', path='js/hide_user_password.js') }}"></script>
+    <script src="{{ url_for('static', path='js/check_user_input.js') }}"></script>
+    <script src="{{ url_for('static', path='js/notification.js') }}"></script>
+    <script src="{{ url_for('static', path='js/scroll_to_top.js') }}"></script>
+    <script src="{{ url_for('static', path='js/footer_submenu.js') }}"></script>
+    <script src="{{ url_for('static', path='js/side_menu.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

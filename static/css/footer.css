@@ -1,0 +1,145 @@
+.footer {
+    background-color: var(--light-background-color);
+    padding: 20px 10px;
+    text-align: center;
+    position: relative;
+    height: 80px;
+    z-index: 1;
+    border-top: 1px solid var(--light-add-color);
+    transition: 
+        background-color var(--transition), 
+        color var(--transition);
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--dark-add-color);
+    transition: border-bottom-color var(--transition);
+}
+
+.footer-logo h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.footer-logo p {
+    margin: 5px 0 0;
+    font-size: 14px;
+}
+
+#scroll-to-top {
+    background-color: transparent;
+    color: var(--dark-add-color);
+    border: none;
+    padding: 8px 12px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--dark-add-color);
+    cursor: pointer;
+    transition: 
+        color var(--transition),
+        border-color var(--transition),
+        background-color var(--transition);
+}
+
+#scroll-to-top:hover {
+    background-color: var(--dark-background-color);
+    color: var(--light-color);
+}
+
+.footer-links {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.footer-links ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    position: relative;
+    margin-right: 20px;
+}
+
+.footer-links li:last-child {
+    margin-right: 0;
+}
+
+/* Убираем подчеркивание у ссылок в заявках и обращениях */
+.footer-menu-item {
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+.footer-submenu {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    pointer-events: none;
+    background-color: var(--light-background-color);
+    visibility: hidden; 
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    transform: translateX(-100%);
+}
+
+.footer-submenu.active {
+    transform: translateX(-65%) translateY(0);
+    pointer-events: auto;
+    visibility: visible;
+}
+
+.footer-submenu li {
+    margin: 0;
+}
+
+.footer-submenu li a {
+    padding: 10px 15px;
+    display: block; 
+    color: var(--dark-add-color);
+    text-decoration: none; /* Убираем подчеркивание */
+    transition: 
+        background-color var(--transition),
+        color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+}
+
+.footer-submenu li a:hover {
+    color: var(--dark-blue-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.footer-submenu li a:active {
+    background-color: var(--light-add-background-color);
+    transform: scale(0.98);
+}
+
+.footer-menu-text {
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.footer-submenu li a.active {
+    background-color: var(--light-blue-color);
+    color: var(--light-color);
+    border-radius: 4px;
+}
+
+.footer-menu-text.active {
+    color: var(--dark-blue-color);
+}

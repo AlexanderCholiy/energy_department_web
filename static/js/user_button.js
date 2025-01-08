@@ -25,8 +25,8 @@ document.getElementById('cancelButton').onclick = function() {
 };
 
 // Закрытие модального окна при нажатии вне его
-// window.onclick = function(event) {
-//     if (event.target == document.getElementById('modal')) {
-//         document.getElementById('modal').style.display = 'none';
-//     }
-// };
+window.onclick = function(event) {
+    if (event.target == document.getElementById('modal')) {
+        document.getElementById('modal').style.display = 'none';
+    }
+};

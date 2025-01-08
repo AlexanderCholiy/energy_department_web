@@ -1,12 +1,114 @@
 .side_menu {
+    width: 200px;
+    background-color: var(--light-background-color);
+    color: var(--dark-add-color);
     position: fixed;
-    /* right: -250px; */
-    top: 0;
-    width: 250px;
-    height: 100%;
-    background-color: #333;
-    color: white;
-    transition: right 0.3s ease;
-    padding: 20px;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    padding-inline: 10px;
+    top: 30px;
+    left: 0;
+    height: calc(100% - 30px - 80px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-right: 1px solid var(--light-add-color);
+    transition: width var(--transition);
+}
+
+.side_menu.collapsed {
+    width: 30px;
+}
+
+.side_menu nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.side_menu nav ul li {
+    padding: 10px 0;
+    position: relative;
+}
+
+#requestsSubmenu {
+    margin-bottom: 30px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: var(--dark-color);
+    cursor: pointer;
+}
+
+.menu-item i {
+    margin-top: 0px;
+}
+
+.side_menu:not(.collapsed) .menu-item i {
+    margin-right: 5px;
+}
+
+.side_menu.collapsed .menu-item i {
+    margin-right: 0;
+}
+
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height var(--transition), opacity var(--transition);
+}
+
+.submenu.active {
+    opacity: 1;
+    max-height: 1000px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.submenu li {
+    margin-left: 17px;
+}
+
+.submenu li a {
+    color: var(--dark-add-color);
+    padding: 5px;
+    transition: 
+        background-color var(--transition),
+        color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+}
+
+.submenu li a:hover {
+    color: var(--dark-blue-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.submenu li a:active {
+    background-color: var(--light-add-background-color);
+    transform: scale(0.98);
+}
+
+.menu-item.active * {
+    color: var(--dark-blue-color);
+}
+
+.submenu li a.active {
+    background-color: var(--light-blue-color);
+    color: var(--light-color);
+    border-radius: 4px;
+}
+
+.side_menu.collapsed .menu-text {
+    display: none;
+}
+
+.toggle-icon {
+    color: var(--dark-color);
+    font-weight: 500;
 }

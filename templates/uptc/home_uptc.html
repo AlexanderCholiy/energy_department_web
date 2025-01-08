@@ -1,35 +1,14 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="shortcut icon" href="{{ url_for('static', path='images/favicon.png') }}" type="image/x-icon">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/base.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/spinner_overlay.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/header.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/user_menu.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/notification.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/side_menu.css') }}"> -->
-</head>
-<body>
-    {% include '/includes/spinner_overlay.html' %}
-    {% include '/includes/header.html' %}
-    {% include '/includes/user_menu.html' %}
-    {% include '/includes/notification.html' %}
-    {% include '/includes/side_menu.html' %}
-    <main>
-        <section>
-            <h1>Основное содержимое</h1>
-        </section>
-    </main>
-    {% include '/includes/footer.html' %}
-    <script src="{{ url_for('static', path='js/spinner_overlay.js') }}"></script>
-    <script src="{{ url_for('static', path='js/user_button.js') }}"></script>
-    <script src="{{ url_for('static', path='js/hide_user_password.js') }}"></script>
-    <script src="{{ url_for('static', path='js/check_user_input.js') }}"></script>
-    <script src="{{ url_for('static', path='js/notification.js') }}"></script>
-    <script src="{{ url_for('static', path='js/side_menu.js') }}"></script>
-</body>
-</html>
+{% extends 'base_uptc.html' %}
+{% block title %}UPTC{% endblock %}
+
+{% block extra_styles %}
+{% endblock %}
+
+{% block body %}
+<section>
+    {{ content | default('Контента пока нет...') }}
+</section>   
+{% endblock %}
+
+{% block extra_scripts %}
+{% endblock %}

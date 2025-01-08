@@ -1,0 +1,9 @@
+#mainContent {
+    flex: 1;
+    padding: 10px 40px;
+    transition: margin-left var(--transition);
+}
+
+/* .side_menu.collapsed ~ #mainContent {
+    margin: 0;
+} */
