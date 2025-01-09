@@ -80,4 +80,4 @@ async def handle_home_uptc(
         'content': content,
     }
 
-    return templates.TemplateResponse('home_uptc.html', context)
+    return templates.TemplateResponse('home.html', context)

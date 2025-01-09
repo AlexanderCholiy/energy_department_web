@@ -132,6 +132,7 @@
 .footer-menu-text {
     color: var(--dark-color);
     font-weight: 500;
+    cursor: pointer;
 }
 
 .footer-submenu li a.active {
