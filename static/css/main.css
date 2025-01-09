@@ -1,9 +1,16 @@
 #mainContent {
     flex: 1;
-    padding: 10px 40px;
+    padding-top: 60px;
+    padding-bottom: 80px;
+    padding-right: 10px;
+    padding-left: 40px;
     transition: margin-left var(--transition);
 }
 
 /* .side_menu.collapsed ~ #mainContent {
     margin: 0;
+} */
+
+/* .container {
+    border: 1px solid red;
 } */

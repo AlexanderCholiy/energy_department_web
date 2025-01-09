@@ -1,0 +1,178 @@
+.table-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 2200px;
+}
+
+#DataTable_filter {
+    float: left;
+}
+
+.buttons {
+    float: right;
+}
+
+#DataTable {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: block;
+    padding: 0;
+    padding-bottom: 20px;
+    font-size: 12px;
+    line-height: 1;
+    margin: 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#DataTable thead th {
+    background-color: var(--dark-table-backround-color);
+    color: var(--light-color);
+    padding: 10px;
+    text-align: left;
+    font-weight: 500;
+    text-align: left;
+    border: 1px solid var(--light-add-color);
+}
+
+#DataTable tbody td {
+    padding: 10px;
+    border: 1px solid var(--light-add-color); 
+}
+
+#DataTable thead th:nth-child(8), 
+#DataTable tbody td:nth-child(8),
+#DataTable thead th:nth-child(7), 
+#DataTable tbody td:nth-child(7),
+#DataTable thead th:nth-child(6), 
+#DataTable tbody td:nth-child(6),
+#DataTable thead th:nth-child(4), 
+#DataTable tbody td:nth-child(4),
+#DataTable thead th:nth-child(3), 
+#DataTable tbody td:nth-child(3),
+#DataTable thead th:nth-child(2), 
+#DataTable tbody td:nth-child(2),
+#DataTable thead th:nth-child(1), 
+#DataTable tbody td:nth-child(1) {
+    width: 12% !important;
+}
+
+#DataTable thead th:nth-child(5), 
+#DataTable tbody td:nth-child(5) {
+    width: 16% !important;
+}
+
+#DataTable tbody tr:nth-child(even) {
+    background-color: var(--light-table-backround-color);
+}
+
+#DataTable tbody tr:nth-child(odd) {
+    background-color: var(--light-background-color);
+}
+
+#DataTable tbody tr:hover {
+    background-color: transparent;
+}
+
+.custom-btn { 
+    color: var(--dark-add-color); 
+    border: none; 
+    padding: 5px 10px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    transition: background-color 0.3s ease;
+}
+
+.buttons-copy {
+    background-color: var(--light-blue-color);
+}
+
+.buttons-excel {
+    background-color: var(--dark-green-color);
+}
+
+.custom-btn:hover {
+    color: var(--light-color);
+    transition: color var(--transition);
+}
+
+.custom-btn:active {
+    transform: scale(0.98);
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid var(--light-add-color); 
+    border-radius: 5px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 5px 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    transition: border-color var(--transition); 
+} 
+
+.dataTables_wrapper .dataTables_filter input:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    outline: none;
+    border: 1px solid var(--dark-add-color);
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border: 1px solid var(--light-add-color);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    transition: border-color var(--transition); 
+}
+
+.dataTables_wrapper .dataTables_length select:focus {
+    border: 1px solid var(--dark-add-color);
+    outline: none;
+}
+
+.dataTables_wrapper tfoot th {
+    background-color: var(--dark-table-backround-color);
+    border: 1px solid var(--light-add-color);
+}
+
+.dataTables_wrapper tfoot input {
+    border: 1px solid var(--light-blue-color);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 3px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.dataTables_wrapper tfoot input:focus {
+    outline: none;
+    box-shadow: 0 2px 6px rgba(255, 255, 255, 0.5);
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 20px;
+    text-align: center; 
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 10px 15px; 
+    margin: 0 5px; 
+    border: 1px solid var(--light-add-color); 
+    border-radius: 5px; 
+    background-color: var(--light-background-color); 
+    color: var(--dark-add-color);
+    cursor: pointer;
+    transition: background-color var(--transition); 
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: rgb(0, 86, 179, 0.8);
+    color: var(--light-color) !important;
+}
+

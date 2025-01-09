@@ -6,7 +6,7 @@
     padding-inline: 10px;
     top: 30px;
     left: 0;
-    height: calc(100% - 30px - 80px);
+    height: calc(100vh - 30px - 50px);
     overflow-y: auto;
     overflow-x: hidden;
     border-right: 1px solid var(--light-add-color);

@@ -6,7 +6,122 @@
 
 {% block body %}
 <section>
-    {{ content | default('Контента пока нет...') }}
+    <table id="DataTable" class="table-container montable somtable">
+        <thead>
+            <tr>
+                <th>Шифр опоры</th>
+                <th>IP адрес</th>
+                <th>MAC адрес РЩУ</th>
+                <th>Local ID</th>
+                <th>Тип устр-ва</th>
+                <th>Статус</th>
+                <th>Аварии</th>
+                <th>Адрес опоры</th> 
+                <th>Uвх. SRP, B</th>
+                <th>Uбат. SRP, B</th>
+                <th>Uвх. COM, B</th>
+                <th>Uбат. COM, B</th>
+                <th>Iкан.1, А</th>
+                <th>Iкан.2, А</th>
+                <th>Показания получены</th>  
+                <th>Прочее</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if table %}
+                {% for row in table %}
+                {% if row[10] == '0' %}
+                    <tr class="srp-row">
+                {% else %}
+                    <tr>
+                {% endif %}            
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[11] }}</td> <!-- IP адрес -->  
+                    <td>{{ row[1] }}</td>
+                    <!-- Для SRP добавим доп. класс чтобы по усполчанию они были скрыты -->
+                    <td>{{ row[10] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <!-- Статус устр-ва -->  
+                    <td>
+                        {% if row[3] == 'NORMAL' %}
+                            <div class="mon-status mon-status-normal">{{ row[3] }}</div> 
+                        {% elif row[3] == 'CRITICAL' %}
+                            <div class="mon-status mon-status-critical">{{ row[3] }}</div>
+                        {% elif row[3] == 'MAJOR' %}
+                            <div class="mon-status mon-status-major">{{ row[3] }}</div>
+                        {% elif row[3] == 'MINOR' %}
+                            <div class="mon-status mon-status-minor">{{ row[3] }}</div>
+                        {% elif row[3] == 'WARNING' %}
+                            <div class="mon-status mon-status-warning">{{ row[3] }}</div>
+                        {% else %}
+                            <div class="mon-status mon-status-unknown">{{ row[3] }}</div>
+                        {% endif %}
+                    </td>
+                    <!-- Аварии [Вкл/выкл лампы в 1/2 канале] [Перегрузка по току в 1/2 канале] [Обрыв в 1/2 канале] -->
+                    <td class="centered-content">
+                        {% if row[14] == 'NaN' and row[15] == 'NaN' and row[16] == 'NaN' and row[17] == 'NaN' and row[18] == 'NaN' and row[19] == 'NaN' %}
+                            NaN
+                        {% else %}
+                            {% if '0' in [row[14]] %}
+                                <div class="fas fa-exclamation-triangle" title="Выкл лампы в 1 канале"></div>
+                            {% endif %} 
+                            {% if '0' in [row[15]] %}
+                                <div class="fas fa-exclamation-triangle" title="Выкл лампы в 2 канале"></div>
+                            {% endif %} 
+                            {% if '1' in [row[16]] %}
+                                <div class="fas fa-bolt" title="Перегрузка по току в 1 канале"></div> 
+                            {% endif %} 
+                            {% if '1' in [row[17]] %}
+                                <div class="fas fa-bolt" title="Перегрузка по току в 2 канале"></div> 
+                            {% endif %} 
+                            {% if '1' in [row[18]] %}
+                                <div class="bx bx-block" title="Обрыв в 1 канале"></div> 
+                            {% endif %} 
+                            {% if '1' in [row[19]] %}
+                                <div class="bx bx-block" title="Обрыв в 2 канале"></div> 
+                            {% endif %} 
+                            <!-- Всё в порядке -->
+                            {% if row[14] == '1' and row[15] == '1' and row[16] == '0' and row[17] == '0' and row[18] == '0' and row[19] == '0' %}
+                                <!-- <div class="fas fa-check-circle" title="Все в порядке"></div>  -->
+                            {% endif %} 
+                        {% endif %}
+                    </td>
+                    <td><div class="pole-address-block">{{ row[12] }}</div></td> <!-- Адрес опоры -->  
+                    <td>{{ row[4] }}</td>
+                    <td>{{ row[5] }}</td>
+                    <td>{{ row[6] }}</td>
+                    <td>{{ row[13] }}</td> <!-- Напряжение БП COM --> 
+                    <td>{{ row[7] }}</td>
+                    <td>{{ row[8] }}</td>
+                    <td>{{ row[9] }}</td>
+                    <td>
+                        <a href="#">Подробнее</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+        <tfoot class="tfoot-style">
+            <tr>
+                <th title="Шифр опоры" style="max-height: 10px !important;"></th>
+                <th title="IP адрес"></th>
+                <th title="MAC-адрес РЩУ"></th>
+                <th title="Local ID"></th>
+                <th title="Тип устройства"></th>  
+                <th title="Статус устройства"></th>
+                <th title="Аварии"></th>
+                <th title="Адрес опоры"></th> 
+                <th title="Напряжение БП SRP"></th>
+                <th title="Напряжение батареи SRP"></th>
+                <th title="Напряжение БП COM"></th>
+                <th title="Напряжение батареи COM"></th>
+                <th title="Ток в первом канале"></th>
+                <th title="Ток во втором канале"></th>
+                <th title="Последняя дата показаний"></th>  
+                <th title="Подробная информация об устройстве"></th>
+            </tr>
+        </tfoot>
+    </table>
 </section>   
 {% endblock %}
 

@@ -2,6 +2,7 @@
 
 :root {
     --transition: 0.5s linear;
+    --background: linear-gradient(135deg, rgb(210, 210, 210), rgb(220, 220, 230));
 
     --light-background-color: rgb(240, 240, 240);
     --light-add-background-color: rgb(210, 210, 210);
@@ -9,7 +10,7 @@
     --light-add-color: rgb(180, 180, 180);
     
     --dark-background-color: black;
-    --dark-add-background-color: rgb(30, 30, 30);
+    --dark-add-background-color: rgb(50, 50, 50);
     --dark-color: black;
     --dark-add-color: rgb(30, 30, 30);
     
@@ -26,6 +27,9 @@
     --dark-yellow-color: rgb(255, 215, 0);
     --dark-magenta-color: rgb(120, 0, 120);
     --dark-cyan-color: rgb(0, 100, 100);
+
+    --dark-table-backround-color: rgba(0, 86, 179, 0.6);
+    --light-table-backround-color: rgba(0, 123, 255, 0.1);
 }
 
 html, body {
@@ -44,7 +48,7 @@ body {
     font-weight: 400;
     font-style: normal;
     font-variation-settings: "wdth" 100;
-    background-color: var(--light-add-background-color);
+    background: var(--background);
     color: var(--dark-color);
     transition: 
         background-color var(--transition), 
@@ -58,7 +62,8 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--light-add-background-color);
+    background: var(--light-background-color);
+    border-left: 1px solid var(--light-add-color);
 }
 
 ::-webkit-scrollbar-thumb {

@@ -4,7 +4,10 @@ header {
     background-position: center;
     padding: 10px;
     height: 30px;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     border-bottom: 1px solid var(--light-add-color);
     z-index: 1;
 }

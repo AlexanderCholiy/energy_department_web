@@ -23,7 +23,9 @@
     {% include '/includes/notification.html' %}
     {% include '/includes/side_menu.html' %}
     <main id="mainContent">
-        {% block body %}{% endblock %}
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
     </main>
     {% include '/includes/footer.html' %}
     <script src="{{ url_for('static', path='js/spinner_overlay.js') }}"></script>

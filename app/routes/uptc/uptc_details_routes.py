@@ -1,9 +1,10 @@
 import os
 
-from fastapi import APIRouter, Depends, Request, Form, status
+from fastapi import APIRouter, Depends, Request, Form, status, Path
 from fastapi.responses import Response, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
+from pydantic import conint
 
 from app.common.check_authorization import check_authorization
 from database.db_users import get_db
@@ -34,36 +35,15 @@ PERSONAL_AREA: dict[str, list[int]] = {
 NULL_VALUE: str = 'NaN'
 
 
-@router.get(urls.home_uptc)
-@router.get(urls.uptc_claims_all)
-@router.get(urls.uptc_claims_mosoblenergo)
-@router.get(urls.uptc_claims_portal)
-@router.get(urls.uptc_claims_tatarstan)
-@router.get(urls.uptc_claims_oboronenergo)
-@router.get(urls.uptc_claims_rzd)
-@router.get(urls.uptc_claims_rossetimr)
-@router.get(urls.uptc_appeals_all)
-@router.get(urls.uptc_appeals_portal)
-@router.get(urls.uptc_appeals_oboronenergo)
-@router.get(urls.uptc_appeals_rossetimr)
-@router.post(urls.home_uptc)
-@router.post(urls.uptc_claims_all)
-@router.post(urls.uptc_claims_mosoblenergo)
-@router.post(urls.uptc_claims_portal)
-@router.post(urls.uptc_claims_tatarstan)
-@router.post(urls.uptc_claims_oboronenergo)
-@router.post(urls.uptc_claims_rzd)
-@router.post(urls.uptc_claims_rossetimr)
-@router.post(urls.uptc_appeals_all)
-@router.post(urls.uptc_appeals_portal)
-@router.post(urls.uptc_appeals_oboronenergo)
-@router.post(urls.uptc_appeals_rossetimr)
+@router.get(urls.uptc_claims_all + '/{number}')
+@router.get(urls.uptc_appeals_all + '/{number}')
 async def handle_home_uptc(
     request: Request,
+    number: int = Path(..., ge=0),
     db: Session = Depends(get_db),
     search_query: str = Form('')
 ) -> Response:
-    """Поиск заявок и обращений."""
+    """Подробная информация по заявкам и обращениям."""
 
     user, redirect_response = await check_authorization(request, db)
     if redirect_response:
@@ -71,17 +51,9 @@ async def handle_home_uptc(
 
     current_path = request.url.path
 
-    if request.method == 'POST' and not search_query:
-        return RedirectResponse(
-            url=current_path, status_code=status.HTTP_303_SEE_OTHER
-        )
-
-    personal_area_id = PERSONAL_AREA.get(current_path, [1, 2, 3, 4, 5, 6])
-
     table = sql_queries(
         select_claims(
             claim_id=search_query,
-            personal_area_id=personal_area_id,
             null_value=NULL_VALUE
         ),
         'tech_pris'
