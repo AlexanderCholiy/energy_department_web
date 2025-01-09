@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}UPTC - Заявки{% endblock %}
+{% block title %}UPTC - Обращения{% endblock %}
 
 {% block extra_styles %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/datatables.css') }}">
 <style>
-    #DataTable thead th:nth-child(7), 
-    #DataTable tbody td:nth-child(7),
+    #DataTable thead th:nth-child(9), 
+    #DataTable tbody td:nth-child(9),
     #DataTable thead th:nth-child(6), 
     #DataTable tbody td:nth-child(6),
+    #DataTable thead th:nth-child(5), 
+    #DataTable tbody td:nth-child(5),
     #DataTable thead th:nth-child(4), 
     #DataTable tbody td:nth-child(4),
     #DataTable thead th:nth-child(3), 
@@ -17,14 +19,14 @@
     #DataTable tbody td:nth-child(2),
     #DataTable thead th:nth-child(1), 
     #DataTable tbody td:nth-child(1) {
-        width: 10%;
+        width: 9%;
     }
 
-    #DataTable thead th:nth-child(6), 
-    #DataTable tbody td:nth-child(6),
-    #DataTable thead th:nth-child(5), 
-    #DataTable tbody td:nth-child(5) {
-        width: 20%;
+    #DataTable thead th:nth-child(8), 
+    #DataTable tbody td:nth-child(8),
+    #DataTable thead th:nth-child(7), 
+    #DataTable tbody td:nth-child(7) {
+        width: 18.5%;
     }
 </style>
 {% endblock %}
@@ -34,10 +36,13 @@
     <table id="DataTable">
         <thead>
             <tr>
-                <th>Тип</th>
                 <th>Личный кабинет</th>
                 <th>Балансодержатель</th>
-                <th>Номер</th>
+                <th>Номер обращения</th>
+                <th>Дата обращения</th>
+                <th>Сетевая организация</th>
+                <th>Филиал</th>
+                <th>Адрес объекта</th>
                 <th>Статус</th>
                 <th>Дата обновления</th>
             </tr>
@@ -45,18 +50,21 @@
         <tbody>
             {% if table %}
                 {% for row in table %}
-                    <td>{{ row[0] }}</td>
                     <td>
-                        {% if row[7] != null_value %}  
-                            <a href="{{ row[7] }}" target="_blank">{{ row[5] }}</a>  
+                        {% if row[10] != null_value %}  
+                            <a href="{{ row[10] }}" target="_blank">{{ row[5] }}</a>  
                         {% else %}
                             {{ row[5] }}
                         {% endif %}
                     </td>
                     <td>{{ row[6] }}</td>
                     <td>
-                        <a href="{{ (urls.uptc_claims_all if row[0] == 'заявка' else urls.uptc_appeals_all) }}/{{ row[1]|urlencode }}" target="_blank">{{ row[2] }}</a>
+                        <a href="{{ urls.uptc_appeals_all }}/{{ row[0]|urlencode }}" target="_blank">{{ row[1] }}</a>
                     </td>
+                    <td>{{ row[9] }}</td>
+                    <td>{{ row[7] }}</td>
+                    <td>{{ row[8] }}</td>
+                    <td>{{ row[13] }}</td>
                     <td>{{ row[3] }}</td>
                     <td>{{ row[4] }}</td>
                 </tr>
@@ -65,10 +73,13 @@
         </tbody>
         <tfoot>
             <tr>
-                <th title="Тип"><input type="text" placeholder="Поиск..." /></th>
                 <th title="Личный кабинет"><input type="text" placeholder="Поиск..." /></th>
                 <th title="Балансодержатель"><input type="text" placeholder="Поиск..." /></th>
-                <th title="Номер"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Номер обращения"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Дата обращения"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Сетевая организация"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Филиал"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Адрес объекта"><input type="text" placeholder="Поиск..." /></th>
                 <th title="Статус"><input type="text" placeholder="Поиск..." /></th>
                 <th title="Дата обновления"><input type="text" placeholder="Поиск..." /></th>
             </tr>

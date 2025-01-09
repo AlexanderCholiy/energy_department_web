@@ -41,28 +41,6 @@
     border: 1px solid var(--light-add-color); 
 }
 
-#DataTable thead th:nth-child(8), 
-#DataTable tbody td:nth-child(8),
-#DataTable thead th:nth-child(7), 
-#DataTable tbody td:nth-child(7),
-#DataTable thead th:nth-child(6), 
-#DataTable tbody td:nth-child(6),
-#DataTable thead th:nth-child(4), 
-#DataTable tbody td:nth-child(4),
-#DataTable thead th:nth-child(3), 
-#DataTable tbody td:nth-child(3),
-#DataTable thead th:nth-child(2), 
-#DataTable tbody td:nth-child(2),
-#DataTable thead th:nth-child(1), 
-#DataTable tbody td:nth-child(1) {
-    width: 12% !important;
-}
-
-#DataTable thead th:nth-child(5), 
-#DataTable tbody td:nth-child(5) {
-    width: 16% !important;
-}
-
 #DataTable tbody tr:nth-child(even) {
     background-color: var(--light-table-backround-color);
 }

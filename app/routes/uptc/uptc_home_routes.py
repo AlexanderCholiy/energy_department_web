@@ -9,6 +9,10 @@ from app.common.check_authorization import check_authorization
 from database.db_users import get_db
 from database.db_base import sql_queries
 from database.requests.select_claims import select_claims
+from database.requests.select_appeals import select_appeals
+from database.requests.select_claims_and_appeals import (
+    select_claims_and_appeals
+)
 from settings.urls import urls
 
 CURRENT_DIR: str = os.path.dirname(__file__)
@@ -78,14 +82,40 @@ async def handle_home_uptc(
 
     personal_area_id = PERSONAL_AREA.get(current_path, [1, 2, 3, 4, 5, 6])
 
-    table = sql_queries(
-        select_claims(
-            claim_id=search_query,
-            personal_area_id=personal_area_id,
-            null_value=NULL_VALUE
-        ),
-        'tech_pris'
-    )
+    if current_path == urls.home_uptc:
+        table = sql_queries(
+            select_claims_and_appeals(
+                number=search_query,
+                null_value=NULL_VALUE
+            ),
+            'tech_pris'
+        )
+        template_name = 'home.html'
+    elif current_path in (
+        urls.uptc_appeals_all,
+        urls.uptc_appeals_portal,
+        urls.uptc_appeals_oboronenergo,
+        urls.uptc_appeals_rossetimr,
+    ):
+        table = sql_queries(
+            select_appeals(
+                number=search_query,
+                personal_area_id=personal_area_id,
+                null_value=NULL_VALUE
+            ),
+            'tech_pris'
+        )
+        template_name = 'appeals.html'
+    else:
+        table = sql_queries(
+            select_claims(
+                number=search_query,
+                personal_area_id=personal_area_id,
+                null_value=NULL_VALUE
+            ),
+            'tech_pris'
+        )
+        template_name = 'claims.html'
 
     context = {
         'request': request,
@@ -97,4 +127,4 @@ async def handle_home_uptc(
         'null_value': NULL_VALUE,
     }
 
-    return templates.TemplateResponse('claims.html', context)
+    return templates.TemplateResponse(template_name, context)

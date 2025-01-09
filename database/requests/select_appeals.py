@@ -4,7 +4,7 @@ from typing import Optional
 def select_appeals(
     null_value: str = 'NaN',
     personal_area_id: list[int] = [1, 2, 3, 4, 5, 6],
-    appeal_id: Optional[str] = None
+    number: Optional[str] = None
 ) -> str:
     return (f'''
     SELECT
@@ -68,8 +68,8 @@ def select_appeals(
         {
             (
                 "AND CAST(ms.message_number AS TEXT) LIKE '%" +
-                str(appeal_id) + "%'"
-            ) if appeal_id else ''}
+                str(number) + "%'"
+            ) if number else ''}
     ORDER BY
         st.time_stamp DESC
     LIMIT 1000;
