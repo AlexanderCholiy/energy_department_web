@@ -1,5 +1,11 @@
 from typing import Optional
 
+CLAIMS_COLUMNS: list[str] = [
+    "ID", "Номер заявки", "Дата статуса", "Статус", "Дата обновления",
+    "Личный кабинет", "Балансодержатель", "Дата заявки", "Ссылка на ЛК",
+    "Комментарии", "Адрес объекта"
+]
+
 
 def select_claims(
     null_value: str = 'NaN',
@@ -11,6 +17,8 @@ def select_claims(
     declarant_name: Optional[str] = None,
     personal_area_name: Optional[str] = None
 ) -> str:
+    """Этот запрос также используется для отправки данных в json формате."""
+
     if number:
         where_clause_claims = (
             "AND CAST(cl.claim_number AS TEXT) LIKE '%" + str(number) + "%'"

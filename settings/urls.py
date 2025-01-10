@@ -14,6 +14,9 @@ class URLS:
     home_avr: str = AVR_PREFIX
     home_uptc: str = UPTC_PREFIX
 
+    uptc_api_claims: str = f'{UPTC_PREFIX}/api{UPTC_CLAIMS}/json'
+    uptc_api_appeals: str = f'{UPTC_PREFIX}/api{UPTC_APPEALS}/json'
+
     uptc_claims_all: str = f'{UPTC_PREFIX}{UPTC_CLAIMS}'
     uptc_claims_mosoblenergo: str = f'{UPTC_PREFIX}{UPTC_CLAIMS}/mosoblenergo'
     uptc_claims_portal: str = f'{UPTC_PREFIX}{UPTC_CLAIMS}/portal'

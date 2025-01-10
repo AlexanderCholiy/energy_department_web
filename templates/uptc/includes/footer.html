@@ -12,7 +12,7 @@
             <ul>
                 <li>
                     <a class="footer-menu-item" data-target="applicationsFooterSubmenu">
-                        <span class="footer-menu-text {% if current_path in [urls.uptc_claims_all, urls.uptc_claims_mosoblenergo, urls.uptc_claims_portal, urls.uptc_claims_tatarstan, urls.uptc_claims_oboronenergo, urls.uptc_claims_rzd, urls.uptc_claims_rossetimr] %}active{% endif %}">Заявки</span>
+                        <span class="footer-menu-text {% if current_path.startswith(urls.uptc_claims_all) %}active{% endif %}">Заявки</span>
                     </a>
                     <ul class="footer-submenu" id="applicationsFooterSubmenu">
                         <li><a href="{{ urls.uptc_claims_all }}" class="{% if current_path == urls.uptc_claims_all %}active{% endif %}">Все</a></li>
@@ -26,7 +26,7 @@
                 </li>
                 <li>
                     <a class="footer-menu-item" data-target="requestsFooterSubmenu">
-                        <span class="footer-menu-text {% if current_path in [urls.uptc_appeals_all, urls.uptc_appeals_portal, urls.uptc_appeals_oboronenergo, urls.uptc_appeals_rossetimr] %}active{% endif %}">Обращения</span>
+                        <span class="footer-menu-text {% if current_path.startswith(urls.uptc_appeals_all) %}active{% endif %}">Обращения</span>
                     </a>
                     <ul class="footer-submenu" id="requestsFooterSubmenu">
                         <li><a href="{{ urls.uptc_appeals_all }}" class="{% if current_path == urls.uptc_appeals_all %}active{% endif %}">Все</a></li>

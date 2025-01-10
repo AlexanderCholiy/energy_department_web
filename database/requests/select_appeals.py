@@ -1,5 +1,12 @@
 from typing import Optional
 
+APPEALS_COLUMNS: list[str] = [
+    "ID", "Номер обращения", "Дата статуса", "Статус", "Дата обновления",
+    "Личный кабинет", "Балансодержатель", "Сетевая организация", "Филиал",
+    "Дата обращения", "Ссылка на ЛК", "Тема обращения", "Текст обращения",
+    "Адрес объекта", "Номер заявки"
+]
+
 
 def select_appeals(
     null_value: str = 'NaN',
@@ -11,6 +18,8 @@ def select_appeals(
     declarant_name: Optional[str] = None,
     personal_area_name: Optional[str] = None
 ) -> str:
+    """Этот запрос также используется для отправки данных в json формате."""
+
     if number:
         where_clause_appeals = (
             "AND CAST(ms.message_number AS TEXT) LIKE '%" + str(number) + "%'"

@@ -9,6 +9,7 @@ from uvicorn import Config, Server
 from app.common.log_timer import log_timer
 from app.routes import authorization_routes
 from app.routes import user_routes
+from app.routes import api_routes
 from app.routes.uptc import uptc_home_routes
 from app.routes.uptc import uptc_details_routes
 from settings.config import web_settings
@@ -18,9 +19,10 @@ init(autoreset=True)
 
 CURRENT_DIR: str = os.path.dirname(__file__)
 
-app = FastAPI(debug=False, title='UPTC&AVR', version='1.0')
+app = FastAPI(debug=False, title='UPTC&AVR', version='1.1')
 app.include_router(authorization_routes.router)
 app.include_router(user_routes.router)
+app.include_router(api_routes.router)
 app.include_router(uptc_home_routes.router)
 app.include_router(uptc_details_routes.router)
 app.mount(

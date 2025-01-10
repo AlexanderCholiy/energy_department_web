@@ -2,7 +2,7 @@
     <nav>
         <ul>
             <li>
-                <a class="menu-item {% if current_path in [urls.uptc_claims_all, urls.uptc_claims_mosoblenergo, urls.uptc_claims_portal, urls.uptc_claims_tatarstan, urls.uptc_claims_oboronenergo, urls.uptc_claims_rzd, urls.uptc_claims_rossetimr] %}active{% endif %}" data-target="applicationsSubmenu">
+                <a class="menu-item {% if current_path.startswith(urls.uptc_claims_all) %}active{% endif %}" data-target="applicationsSubmenu">
                     <i class='bx bx-folder'></i>
                     <span class="menu-text">Заявки</span>
                     <i class='bx bx-chevron-down toggle-icon' data-target="applicationsSubmenu"></i>
@@ -18,7 +18,7 @@
                 </ul>
             </li>
             <li>
-                <a class="menu-item {% if current_path in [urls.uptc_appeals_all, urls.uptc_appeals_portal, urls.uptc_appeals_oboronenergo, urls.uptc_appeals_rossetimr] %}active{% endif %}" data-target="requestsSubmenu">
+                <a class="menu-item {% if current_path.startswith(urls.uptc_appeals_all) %}active{% endif %}" data-target="requestsSubmenu">
                     <i class='bx bx-envelope'></i>
                     <span class="menu-text">Обращения</span>
                     <i class='bx bx-chevron-down toggle-icon' data-target="requestsSubmenu"></i>

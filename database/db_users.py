@@ -25,11 +25,8 @@ def get_db():
 if __name__ == '__main__':
     Base.metadata.create_all(engine)
     new_user = User(
-        useremail='user@example.com',
-        hashed_password=(
-            '$argon2id$v=19$m=65536,t=3,p=4$xHivldKa877XmnMOwVjrnQ$fjZJnZp' +
-            'xyizPWY4tXY6R+5jrL/r5TbJRfK2zGJN8/7I'
-        )
+        useremail="p.makurov@newtowers.ru",
+        hashed_password="$argon2id$v=19$m=65536,t=3,p=4$zrlXyjmndG5NidEaQ+id0w$2MNlsN86ZWna74I38/eeqViksbXVeFmo6rE0SKHTfgo"
     )
     db = next(get_db())
     db.add(new_user)
