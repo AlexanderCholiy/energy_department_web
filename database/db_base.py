@@ -57,18 +57,17 @@ def sql_queries(
     if database == 'tech_pris':
         database = db_settings.DB_NAME_TECH_PRIS
     elif database == 'avr':
-        database = db_settings.DB_NAME_TECH_PRIS
+        database = db_settings.DB_NAME_AVR
     else:
         raise ValueError('Некорректное имя БД.')
 
-    db_settings.DB_NAME_AVR
     try:
         with closing(psycopg2.connect(
             user=db_settings.DB_USER,
             password=db_settings.DB_PSWD,
             host=db_settings.DB_HOST,
             port=db_settings.DB_PORT,
-            database=db_settings.DB_NAME_TECH_PRIS
+            database=database
         )) as connection:
             with closing(connection.cursor()) as cursor:
                 cursor.execute(request)

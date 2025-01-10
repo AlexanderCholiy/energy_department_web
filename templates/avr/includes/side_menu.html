@@ -1,0 +1,30 @@
+<aside class="side_menu" id="sideMenu">
+    <nav>
+        <ul>
+            <li>
+                <a class="menu-item {% if current_path.startswith(urls.avr_dgu_all) %}active{% endif %}" data-target="applicationsSubmenu">
+                    <i class='bx bx-folder'></i>
+                    <span class="menu-text">Заявки</span>
+                    <i class='bx bx-chevron-down toggle-icon' data-target="applicationsSubmenu"></i>
+                </a>
+                <ul class="submenu" id="applicationsSubmenu">
+                    <li><a href="{{ urls.avr_claims_all }}" class="{% if current_path == urls.avr_claims_all %}active{% endif %}">Все</a></li>
+                    <li><a href="{{ urls.avr_claims_actual }}" class="{% if current_path == urls.avr_claims_actual %}active{% endif %}">Актуальные</a></li>
+                    <li><a href="{{ urls.avr_claims_not_actual }}" class="{% if current_path == urls.avr_claims_not_actual %}active{% endif %}">Не актуальные</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="menu-item {% if current_path.startswith(urls.avr_dgu_all) %}active{% endif %}" data-target="requestsSubmenu">
+                    <i class='bx bx-power-off'></i>
+                    <span class="menu-text">ДГУ</span>
+                    <i class='bx bx-chevron-down toggle-icon' data-target="requestsSubmenu"></i>
+                </a>
+                <ul class="submenu" id="requestsSubmenu">
+                    <li><a href="{{ urls.avr_dgu_all }}" class="{% if current_path == urls.avr_dgu_all %}active{% endif %}">Все</a></li>
+                    <li><a href="{{ urls.avr_dgu_actual }}" class="{% if current_path == urls.avr_dgu_actual %}active{% endif %}">Актуальные</a></li>
+                    <li><a href="{{ urls.avr_dgu_not_actual }}" class="{% if current_path == urls.avr_dgu_not_actual %}active{% endif %}">Не актуальные</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</aside>

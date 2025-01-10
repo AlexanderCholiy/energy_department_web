@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}UPTC{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/datatables.css') }}">
+<style>
+    #DataTable thead th:nth-child(6), 
+    #DataTable tbody td:nth-child(6),
+    #DataTable thead th:nth-child(4), 
+    #DataTable tbody td:nth-child(4),
+    #DataTable thead th:nth-child(3), 
+    #DataTable tbody td:nth-child(3),
+    #DataTable thead th:nth-child(2), 
+    #DataTable tbody td:nth-child(2),
+    #DataTable thead th:nth-child(1), 
+    #DataTable tbody td:nth-child(1) {
+        width: 15%;
+    }
+
+    #DataTable thead th:nth-child(5), 
+    #DataTable tbody td:nth-child(5) {
+        width: 25%;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="table-container">
+    <table id="DataTable">
+        <thead>
+            <tr>
+                <th>Тип</th>
+                <th>Личный кабинет</th>
+                <th>Балансодержатель</th>
+                <th>Номер</th>
+                <th>Статус</th>
+                <th>Дата обновления</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if table %}
+                {% for row in table %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>
+                            {% if row[7] != null_value %}  
+                                <a href="{{ row[7] }}" target="_blank">{{ row[5] }}</a>  
+                            {% else %}
+                                {{ row[5] }}
+                            {% endif %}
+                        </td>
+                        <td>{{ row[6] }}</td>
+                        <td>
+                            <a href="{{ (urls.uptc_claims_all if row[0] == 'заявка' else urls.uptc_appeals_all) }}/{{ row[1]|urlencode }}">{{ row[2] }}</a>
+                        </td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th title="Тип"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Личный кабинет"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Балансодержатель"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Номер"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Статус"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Дата обновления"><input type="text" placeholder="Поиск..." /></th>
+            </tr>
+        </tfoot>
+    </table>
+    <div id="copyNotification" class="alert success">copied</div> 
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Подключаем необходимые скрипты для работы DataTables -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<!-- Подключаем DataTables Buttons для экспорта -->
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.colVis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<!-- Добавляем DataTables -->
+<script src="{{ url_for('static', path='js/datatables.js') }}"></script>
+{% endblock %}

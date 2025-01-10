@@ -1,0 +1,6 @@
+{% if request.session.message %}
+<div id="notification" class="alert {{ request.session.message_type }}">
+    {{ request.session.message }}
+</div>
+{% set _ = request.session.pop('message', None) %}
+{% endif %}

@@ -113,7 +113,7 @@ async def fetch_data(
             ), 'tech_pris'
         ), 'home.html', current_path
 
-    if 'appeals' in current_path:
+    if current_path.startswith(urls.uptc_appeals_all):
         table = sql_queries(
             select_appeals(
                 number=search_query,

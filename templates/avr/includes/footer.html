@@ -1,0 +1,36 @@
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-logo">
+            <p>© 2024 AVR</p>
+        </div>
+        <div class="footer-button">
+            <button id="scroll-to-top" aria-label="Scroll to top">
+                <i class="bx bx-up-arrow-alt"></i> Top
+            </button>   
+        </div>
+        <div class="footer-links">
+            <ul>
+                <li>
+                    <a class="footer-menu-item" data-target="requestsFooterSubmenu">
+                        <span class="footer-menu-text {% if current_path.startswith(urls.avr_dgu_all) %}active{% endif %}">Дгу</span>
+                    </a>
+                    <ul class="footer-submenu" id="requestsFooterSubmenu">
+                        <li><a href="{{ urls.avr_dgu_all }}" class="{% if current_path == urls.avr_dgu_all %}active{% endif %}">Все</a></li>
+                        <li><a href="{{ urls.avr_dgu_actual }}" class="{% if current_path == urls.avr_dgu_actual %}active{% endif %}">Актуальные</a></li>
+                        <li><a href="{{ urls.avr_dgu_not_actual }}" class="{% if current_path == urls.avr_dgu_not_actual %}active{% endif %}">Не актуальные</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="footer-menu-item" data-target="applicationsFooterSubmenu">
+                        <span class="footer-menu-text {% if current_path.startswith(urls.avr_claims_all) %}active{% endif %}">Заявки</span>
+                    </a>
+                    <ul class="footer-submenu" id="applicationsFooterSubmenu">
+                        <li><a href="{{ urls.avr_claims_all }}" class="{% if current_path == urls.avr_claims_all %}active{% endif %}">Все</a></li>
+                        <li><a href="{{ urls.avr_claims_actual }}" class="{% if current_path == urls.avr_claims_actual %}active{% endif %}">Актуальные</a></li>
+                        <li><a href="{{ urls.avr_claims_not_actual }}" class="{% if current_path == urls.avr_claims_not_actual %}active{% endif %}">Не актуальные</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>

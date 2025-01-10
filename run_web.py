@@ -12,6 +12,7 @@ from app.routes import user_routes
 from app.routes import api_routes
 from app.routes.uptc import uptc_home_routes
 from app.routes.uptc import uptc_details_routes
+from app.routes.avr import avr_home_routes
 from settings.config import web_settings
 from settings.web_log_config import web_log_config
 
@@ -25,6 +26,7 @@ app.include_router(user_routes.router)
 app.include_router(api_routes.router)
 app.include_router(uptc_home_routes.router)
 app.include_router(uptc_details_routes.router)
+app.include_router(avr_home_routes.router)
 app.mount(
     web_settings.WEB_STATIC_URL,
     StaticFiles(directory=os.path.join(CURRENT_DIR, 'static')),

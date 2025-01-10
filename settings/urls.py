@@ -2,6 +2,8 @@ class URLS:
     """Список доступных URL"""
     UPTC_PREFIX: str = '/UPTC'
     AVR_PREFIX: str = '/AVR'
+    AVR_CLAIMS: str = '/claims'
+    AVR_DGU: str = '/dgu'
     UPTC_CLAIMS: str = '/claims'
     UPTC_APPEALS: str = '/appeals'
 
@@ -12,6 +14,15 @@ class URLS:
     user: str = '/user'
 
     home_avr: str = AVR_PREFIX
+
+    avr_claims_all: str = f'{AVR_PREFIX}{AVR_CLAIMS}'
+    avr_claims_actual: str = f'{AVR_PREFIX}{AVR_CLAIMS}/actual'
+    avr_claims_not_actual: str = f'{AVR_PREFIX}{AVR_CLAIMS}/not_actual'
+
+    avr_dgu_all: str = f'{AVR_PREFIX}{AVR_DGU}'
+    avr_dgu_actual: str = f'{AVR_PREFIX}{AVR_DGU}/actual'
+    avr_dgu_not_actual: str = f'{AVR_PREFIX}{AVR_DGU}/not_actual'
+
     home_uptc: str = UPTC_PREFIX
 
     uptc_api_claims: str = f'{UPTC_PREFIX}/api{UPTC_CLAIMS}/json'

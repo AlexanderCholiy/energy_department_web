@@ -1,0 +1,18 @@
+<header>
+    <div class="header-container">
+        <div class="header-side-menu">
+            <button class="header-button" id="sidemenuButton">
+                <i class='bx bx-menu'></i>
+            </button>
+            <a class="site" href="{{ urls.home_avr }}">AVR</a>
+        </div>
+        <form action="{{ search_url }}" method="POST" id="searchForm" class="search-form">
+            <div class="search-input-container">
+                <input type="text" id="SearchField" name="search_query" placeholder="Поиск..." value="{{ search_query | default('') }}">
+                <button type="submit" class="search-button" title="Поиск">
+                    <i class='bx bx-search'></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</header>

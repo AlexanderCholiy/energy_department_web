@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'AVR - Заявки' if current_path.startswith(urls.avr_claims_all) else 'AVR - ДГУ' }}{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/datatables.css') }}">
+<style>
+    #DataTable thead th:nth-child(12), 
+    #DataTable tbody td:nth-child(12),
+    #DataTable thead th:nth-child(11), 
+    #DataTable tbody td:nth-child(11),
+    #DataTable thead th:nth-child(10), 
+    #DataTable tbody td:nth-child(10),
+    #DataTable thead th:nth-child(9), 
+    #DataTable tbody td:nth-child(9),
+    #DataTable thead th:nth-child(6), 
+    #DataTable tbody td:nth-child(6),
+    #DataTable thead th:nth-child(5), 
+    #DataTable tbody td:nth-child(5),
+    #DataTable thead th:nth-child(4), 
+    #DataTable tbody td:nth-child(4),
+    #DataTable thead th:nth-child(3), 
+    #DataTable tbody td:nth-child(3),
+    #DataTable thead th:nth-child(2), 
+    #DataTable tbody td:nth-child(2),
+    #DataTable thead th:nth-child(1), 
+    #DataTable tbody td:nth-child(1) {
+        width: 7%;
+    }
+
+    #DataTable thead th:nth-child(8), 
+    #DataTable tbody td:nth-child(8),
+    #DataTable thead th:nth-child(7), 
+    #DataTable tbody td:nth-child(7) {
+        width: 15%;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="table-container">
+    <table id="DataTable">
+        <thead>
+            <tr>
+                <th>Номер</th>
+                <th>Оператор</th>
+                <th>Шифр опоры</th>
+                <th>ИО</th>
+                <th>Макрорегион</th>
+                <th>Регион</th>
+                <th>Адрес</th>
+                <th>Подразделение</th>
+                <th>Дата возникновения</th>
+                <th>Статус</th>
+                <th>Актуальность статуса</th>
+                <th>Дата обновления статуса</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if table %}
+                {% for row in table %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>
+                            {% if row[8] != null_value %}  
+                                <a href="{{ row[3] }}" target="_blank">{{ row[2] }}</a>  
+                            {% else %}
+                                {{ row[2] }}
+                            {% endif %}
+                        </td>
+                        <td>{{ row[4] }}</td>
+                        <td>{{ row[5] }}</td>
+                        <td>{{ row[6] }}</td>
+                        <td>{{ row[7] }}</td>
+                        <td>{{ row[8] }}</td>
+                        <td>{{ row[9] }}</td>
+                        <td>{{ row[10] }}</td>
+                        <td>{{ row[11] }}</td>
+                        <td>{{ row[12] }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th title="Номер"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Оператор"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Шифр опоры"><input type="text" placeholder="Поиск..." /></th>
+                <th title="ИО"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Макрорегион"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Регион"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Адрес"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Подразделение"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Дата возникновения"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Статус"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Актуальность статуса"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Дата обновления статуса"><input type="text" placeholder="Поиск..." /></th>
+            </tr>
+        </tfoot>
+    </table>
+    <div id="copyNotification" class="alert success">copied</div> 
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Подключаем необходимые скрипты для работы DataTables -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<!-- Подключаем DataTables Buttons для экспорта -->
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.colVis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<!-- Добавляем DataTables -->
+<script src="{{ url_for('static', path='js/datatables.js') }}"></script>
+{% endblock %}
