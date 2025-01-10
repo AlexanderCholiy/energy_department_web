@@ -9,20 +9,26 @@ AVR_COLUMNS: list[str] = [
 
 def select_avr(
     null_value: str = 'NaN',
-    limit: Optional[int] = 1000,
+    limit: Optional[int] = 5000,
     number: Optional[str] = None,
     is_status_relevant: Optional[bool] = None,
     filter_power_supply: Optional[bool] = None
 ) -> str:
     """Этот запрос также используется для отправки данных в json формате."""
-
-    where_relevant_status_clause = ''
-    if is_status_relevant is not None:
+    if is_status_relevant:
         where_relevant_status_clause = (
-            'AND s.is_status_relevant = ' + (
-                'true' if is_status_relevant else 'false'
-            )
+            'AND s.is_status_relevant = true' +
+            '\nAND DATE(const_23.date_and_time) = (' +
+            'SELECT DATE(MAX(date_and_time)' +
+            ') FROM constants WHERE constant_type_id = 23)'
         )
+    elif is_status_relevant is False:
+        where_relevant_status_clause = (
+            "AND s.is_status_relevant != true " +
+            '\nAND const_8.constant_value IS NOT NULL'
+        )
+    else:
+        where_relevant_status_clause = 'AND const_8.constant_value IS NOT NULL'
 
     where_status_clause = (
         "AND s.status = 'На резервном э/снaбжении' "
@@ -39,10 +45,12 @@ def select_avr(
                 pl.site_id::text, '{null_value}'
             ) AS "Внутренний шифр опоры TS",
             COALESCE(pl.infrastructure_company, '{null_value}') AS "ИО",
-            COALESCE(rg.macroregion, '{null_value}') AS "Макрорегион",
+            COALESCE(rg.macroregion , '{null_value}') AS "Макрорегион",
             COALESCE(const_18.constant_value, '{null_value}') AS "Регион",
             COALESCE(const_19.constant_value, '{null_value}') AS "Адрес",
-            COALESCE(const_1.constant_value, '{null_value}') AS "Подразделение",
+            COALESCE(
+                const_1.constant_value, '{null_value}'
+            ) AS "Подразделение",
             COALESCE(
                 const_8.constant_value, '{null_value}'
             ) AS "Дата возникновения",
@@ -90,6 +98,6 @@ def select_avr(
             {where_relevant_status_clause}
             {where_status_clause}
         ORDER BY
-            s.date_and_time DESC
+            const_8.constant_value DESC
         {'LIMIT ' + str(limit) if limit is not None else ''};
     ''')

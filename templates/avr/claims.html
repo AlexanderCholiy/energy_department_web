@@ -64,7 +64,7 @@
                         <td>{{ row[1] }}</td>
                         <td>
                             {% if row[8] != null_value %}  
-                                <a href="{{ row[3] }}" target="_blank">{{ row[2] }}</a>  
+                                <a href="https://fridge.newtowers.ru/site/passport/{{ row[3] | urlencode }}" target="_blank">{{ row[2] }}</a>
                             {% else %}
                                 {{ row[2] }}
                             {% endif %}

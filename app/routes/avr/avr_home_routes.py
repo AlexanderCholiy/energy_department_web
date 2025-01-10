@@ -75,14 +75,13 @@ async def handle_home_avr(
 async def fetch_data(current_path: str, search_query: str):
     is_status_relevant = RELEVANT_STATUS.get(current_path)
     if current_path == urls.home_avr:
-        # return sql_queries(
-        #     select_avr(
-        #         null_value=NULL_VALUE,
-        #         number=search_query,
-        #         is_status_relevant=is_status_relevant
-        #     ), 'avr'
-        # ), 'home.html', current_path
-        return None, 'home.html', current_path
+        return sql_queries(
+            select_avr(
+                null_value=NULL_VALUE,
+                number=search_query,
+                is_status_relevant=is_status_relevant
+            ), 'avr'
+        ), 'home.html', current_path
 
     if current_path.startswith(urls.avr_claims_all):
         table = sql_queries(
