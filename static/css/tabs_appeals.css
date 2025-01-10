@@ -1,0 +1,20 @@
+.tabs {
+    border: 2px solid var(--dark-red-color);
+}
+
+.tab-footer-button  {
+    background-color: var(--dark-red-color);
+    border-right: 2px solid var(--dark-red-color);
+}
+
+.tab-footer {
+    border-top: 2px solid var(--dark-red-color);
+}
+
+.tab-button.active::after {
+    background: var(--dark-red-color);
+}
+
+.tab-footer-button:active {
+    color: var(--dark-red-color);
+}

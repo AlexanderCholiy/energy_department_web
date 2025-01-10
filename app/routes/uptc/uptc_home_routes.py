@@ -15,13 +15,12 @@ from database.requests.select_claims_and_appeals import (
 )
 from settings.urls import urls
 
-CURRENT_DIR: str = os.path.dirname(__file__)
 router = APIRouter()
-
-directory: str = os.path.join(
-    CURRENT_DIR, '..', '..', '..', 'templates', 'uptc'
+templates = Jinja2Templates(
+    directory=os.path.join(
+        os.path.dirname(__file__), '..', '..', '..', 'templates', 'uptc'
+    )
 )
-templates = Jinja2Templates(directory=directory)
 
 PERSONAL_AREA: dict[str, list[int]] = {
     urls.uptc_claims_portal: [1],
@@ -74,6 +73,7 @@ async def handle_home_uptc(
         return redirect_response
 
     current_path = request.url.path
+    search_query = search_query.strip()
 
     if request.method == 'POST' and not search_query:
         return RedirectResponse(
@@ -81,41 +81,13 @@ async def handle_home_uptc(
         )
 
     personal_area_id = PERSONAL_AREA.get(current_path, [1, 2, 3, 4, 5, 6])
+    table, template_name, current_path = await fetch_data(
+        current_path, search_query, personal_area_id
+    )
 
-    if current_path == urls.home_uptc:
-        table = sql_queries(
-            select_claims_and_appeals(
-                number=search_query,
-                null_value=NULL_VALUE
-            ),
-            'tech_pris'
-        )
-        template_name = 'home.html'
-    elif current_path in (
-        urls.uptc_appeals_all,
-        urls.uptc_appeals_portal,
-        urls.uptc_appeals_oboronenergo,
-        urls.uptc_appeals_rossetimr,
-    ):
-        table = sql_queries(
-            select_appeals(
-                number=search_query,
-                personal_area_id=personal_area_id,
-                null_value=NULL_VALUE
-            ),
-            'tech_pris'
-        )
-        template_name = 'appeals.html'
-    else:
-        table = sql_queries(
-            select_claims(
-                number=search_query,
-                personal_area_id=personal_area_id,
-                null_value=NULL_VALUE
-            ),
-            'tech_pris'
-        )
-        template_name = 'claims.html'
+    search_url = current_path if (
+        current_path in PERSONAL_AREA.keys()
+    ) else urls.home_uptc
 
     context = {
         'request': request,
@@ -123,8 +95,53 @@ async def handle_home_uptc(
         'current_path': current_path,
         'user': user,
         'search_query': search_query,
+        'search_url': search_url,
         'table': table,
         'null_value': NULL_VALUE,
     }
 
     return templates.TemplateResponse(template_name, context)
+
+
+async def fetch_data(
+    current_path: str, search_query: str, personal_area_id: list[int]
+):
+    if current_path == urls.home_uptc:
+        return sql_queries(
+            select_claims_and_appeals(
+                number=search_query, null_value=NULL_VALUE
+            ), 'tech_pris'
+        ), 'home.html', current_path
+
+    if 'appeals' in current_path:
+        table = sql_queries(
+            select_appeals(
+                number=search_query,
+                personal_area_id=personal_area_id,
+                null_value=NULL_VALUE
+            ), 'tech_pris'
+        )
+        if not table:
+            table = sql_queries(
+                select_appeals(
+                    number=search_query, null_value=NULL_VALUE
+                ), 'tech_pris'
+            )
+            current_path = urls.uptc_appeals_all
+        return table, 'appeals.html', current_path
+
+    table = sql_queries(
+        select_claims(
+            number=search_query,
+            personal_area_id=personal_area_id,
+            null_value=NULL_VALUE
+        ), 'tech_pris'
+    )
+    if not table:
+        table = sql_queries(
+            select_claims(
+                number=search_query, null_value=NULL_VALUE
+            ), 'tech_pris'
+        )
+        current_path = urls.uptc_claims_all
+    return table, 'claims.html', current_path

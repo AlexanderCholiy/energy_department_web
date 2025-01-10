@@ -10,6 +10,7 @@ from app.common.log_timer import log_timer
 from app.routes import authorization_routes
 from app.routes import user_routes
 from app.routes.uptc import uptc_home_routes
+from app.routes.uptc import uptc_details_routes
 from settings.config import web_settings
 from settings.web_log_config import web_log_config
 
@@ -21,6 +22,7 @@ app = FastAPI(debug=False, title='UPTC&AVR', version='1.0')
 app.include_router(authorization_routes.router)
 app.include_router(user_routes.router)
 app.include_router(uptc_home_routes.router)
+app.include_router(uptc_details_routes.router)
 app.mount(
     web_settings.WEB_STATIC_URL,
     StaticFiles(directory=os.path.join(CURRENT_DIR, 'static')),

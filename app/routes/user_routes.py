@@ -67,7 +67,7 @@ async def update_profile(
     try:
         db.commit()
         db.refresh(user_data)
-    except Exception as e:
+    except Exception:
         db.rollback()
         return set_error_message(
             request, 'Ошибка при обновлении данных.'

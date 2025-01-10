@@ -1,15 +1,15 @@
 import os
 
-from fastapi import APIRouter, Depends, Request, Form, status, Path
-from fastapi.responses import Response, RedirectResponse
+from fastapi import APIRouter, Depends, Request, Form, Path, HTTPException
+from fastapi.responses import Response
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-from pydantic import conint
 
 from app.common.check_authorization import check_authorization
 from database.db_users import get_db
 from database.db_base import sql_queries
 from database.requests.select_claims import select_claims
+from database.requests.select_appeals import select_appeals
 from settings.urls import urls
 
 CURRENT_DIR: str = os.path.dirname(__file__)
@@ -35,11 +35,11 @@ PERSONAL_AREA: dict[str, list[int]] = {
 NULL_VALUE: str = 'NaN'
 
 
-@router.get(urls.uptc_claims_all + '/{number}')
-@router.get(urls.uptc_appeals_all + '/{number}')
+@router.get(urls.uptc_claims_all + '/{number_id}')
+@router.get(urls.uptc_appeals_all + '/{number_id}')
 async def handle_home_uptc(
     request: Request,
-    number: int = Path(..., ge=0),
+    number_id: int = Path(..., ge=0),
     db: Session = Depends(get_db),
     search_query: str = Form('')
 ) -> Response:
@@ -51,13 +51,52 @@ async def handle_home_uptc(
 
     current_path = request.url.path
 
-    table = sql_queries(
-        select_claims(
-            claim_id=search_query,
-            null_value=NULL_VALUE
-        ),
-        'tech_pris'
-    )
+    if current_path.startswith(urls.uptc_claims_all):
+        template_name = 'claims_details.html'
+        table_claims = sql_queries(
+            select_claims(
+                null_value=NULL_VALUE,
+                claim_id=number_id
+            ), 'tech_pris'
+        )
+
+        if not table_claims:
+            raise HTTPException(status_code=404, detail='Заявка не найдена.')
+
+        table_appeals = sql_queries(
+            select_appeals(
+                null_value=NULL_VALUE,
+                claim_number=table_claims[0][1],
+                declarant_name=table_claims[0][6],
+                personal_area_name=table_claims[0][5]
+            ), 'tech_pris'
+        )
+    else:
+        template_name = 'appeals_details.html'
+        table_appeals = sql_queries(
+            select_appeals(
+                null_value=NULL_VALUE,
+                appeal_id=number_id
+            ), 'tech_pris'
+        )
+
+        if not table_appeals:
+            raise HTTPException(
+                status_code=404, detail='Обращение не найдено.'
+            )
+
+        table_claims = sql_queries(
+            select_claims(
+                null_value=NULL_VALUE,
+                claim_number=table_appeals[0][14],
+                declarant_name=table_appeals[0][6],
+                personal_area_name=table_appeals[0][5]
+            ), 'tech_pris'
+        )
+
+    search_url = current_path if (
+        current_path in PERSONAL_AREA.keys()
+    ) else urls.home_uptc
 
     context = {
         'request': request,
@@ -65,8 +104,10 @@ async def handle_home_uptc(
         'current_path': current_path,
         'user': user,
         'search_query': search_query,
-        'table': table,
+        'search_url': search_url,
         'null_value': NULL_VALUE,
+        'table_claims': table_claims,
+        'table_appeals': table_appeals
     }
 
-    return templates.TemplateResponse('claims.html', context)
+    return templates.TemplateResponse(template_name, context)

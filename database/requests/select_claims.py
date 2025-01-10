@@ -4,8 +4,30 @@ from typing import Optional
 def select_claims(
     null_value: str = 'NaN',
     personal_area_id: list[int] = [1, 2, 3, 4, 5, 6],
-    number: Optional[str] = None
+    limit: Optional[int] = 1000,
+    number: Optional[str] = None,
+    claim_id: Optional[int] = None,
+    claim_number: Optional[int] = None,
+    declarant_name: Optional[str] = None,
+    personal_area_name: Optional[str] = None
 ) -> str:
+    if number:
+        where_clause_claims = (
+            "AND CAST(cl.claim_number AS TEXT) LIKE '%" + str(number) + "%'"
+        )
+    elif claim_id:
+        where_clause_claims = (
+            f"AND cl.id = '{claim_id}'"
+        )
+    elif claim_number and declarant_name and personal_area_name:
+        where_clause_claims = (
+            f"AND cl.claim_number = '{claim_number}'" +
+            f"\nAND d.name = '{declarant_name}'" +
+            f"\nAND pa.name = '{personal_area_name}'"
+        )
+    else:
+        where_clause_claims = ''
+
     return (f'''
     SELECT
         cl.id AS "ID",
@@ -46,12 +68,8 @@ def select_claims(
         cl.personal_area_id IN (
             {', '.join(map(str, personal_area_id))}
         )
-        {
-            (
-                "AND CAST(cl.claim_number AS TEXT) LIKE '%" +
-                str(number) + "%'"
-            ) if number else ''}
+        {where_clause_claims}
     ORDER BY
         st.time_stamp DESC
-    LIMIT 1000;
+    {'LIMIT ' + str(limit) if limit is not None else ''};
     ''')

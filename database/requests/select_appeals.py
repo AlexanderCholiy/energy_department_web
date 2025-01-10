@@ -4,8 +4,30 @@ from typing import Optional
 def select_appeals(
     null_value: str = 'NaN',
     personal_area_id: list[int] = [1, 2, 3, 4, 5, 6],
-    number: Optional[str] = None
+    limit: Optional[int] = 1000,
+    number: Optional[str] = None,
+    appeal_id: Optional[int] = None,
+    claim_number: Optional[int] = None,
+    declarant_name: Optional[str] = None,
+    personal_area_name: Optional[str] = None
 ) -> str:
+    if number:
+        where_clause_appeals = (
+            "AND CAST(ms.message_number AS TEXT) LIKE '%" + str(number) + "%'"
+        )
+    elif appeal_id:
+        where_clause_appeals = (
+            f"AND ms.id = '{appeal_id}'"
+        )
+    elif claim_number and declarant_name and personal_area_name:
+        where_clause_appeals = (
+            f"AND const_2070.constant_text = '{claim_number}'" +
+            f"\nAND d.name = '{declarant_name}'" +
+            f"\nAND pa.name = '{personal_area_name}'"
+        )
+    else:
+        where_clause_appeals = ''
+
     return (f'''
     SELECT
         ms.id AS "ID",
@@ -25,7 +47,8 @@ def select_appeals(
         COALESCE(
             const_2060.constant_text, '{null_value}'
         ) AS "Текст обращения",
-        COALESCE(const_1100.constant_text, '{null_value}') AS "Адрес объекта"
+        COALESCE(const_1100.constant_text, '{null_value}') AS "Адрес объекта",
+        COALESCE(const_2070.constant_text, '{null_value}') AS "Номер заявки"
     FROM
         messages AS ms
     LEFT JOIN (
@@ -65,12 +88,8 @@ def select_appeals(
         ms.personal_area_id IN (
             {', '.join(map(str, personal_area_id))}
         )
-        {
-            (
-                "AND CAST(ms.message_number AS TEXT) LIKE '%" +
-                str(number) + "%'"
-            ) if number else ''}
+        {where_clause_appeals}
     ORDER BY
         st.time_stamp DESC
-    LIMIT 1000;
+    {'LIMIT ' + str(limit) if limit is not None else ''};
     ''')
