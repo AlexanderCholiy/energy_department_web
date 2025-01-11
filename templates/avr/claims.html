@@ -4,6 +4,7 @@
 {% block extra_styles %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/datatables.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/avr_dgu_buttons.css') }}">
 <style>
     #DataTable thead th:nth-child(12), 
     #DataTable tbody td:nth-child(12),
@@ -39,6 +40,10 @@
 
 {% block body %}
 <section class="table-container">
+    <div class="button-container">
+        <button id="DguActualToggleButton" class="toggle-button {% if current_path == urls.avr_dgu_actual %}active{% endif %}" data-url-active="{{ urls.avr_dgu_actual }}" data-url-inactive="{{ urls.avr_claims_actual }}" onclick="toggleActualDGU()">ДГУ (актуальные)</button>
+        <button id="DguNotActualToggleButton" class="toggle-button {% if current_path == urls.avr_dgu_not_actual %}active{% endif %}" data-url-active="{{ urls.avr_dgu_not_actual }}" data-url-inactive="{{ urls.avr_claims_not_actual }}" onclick="toggleNotActualDGU()">ДГУ (не актуальные)</button>
+    </div>
     <table id="DataTable">
         <thead>
             <tr>
@@ -117,6 +122,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 
-<!-- Добавляем DataTables -->
 <script src="{{ url_for('static', path='js/datatables.js') }}"></script>
+<script src="{{ url_for('static', path='js/avr_dgu_buttons.js') }}"></script>
 {% endblock %}

@@ -21,7 +21,6 @@ RELEVANT_STATUS: dict[str, Optional[bool]] = {
     urls.avr_claims_all: None,
     urls.avr_claims_actual: True,
     urls.avr_claims_not_actual: False,
-    urls.avr_dgu_all: None,
     urls.avr_dgu_actual: True,
     urls.avr_dgu_not_actual: False
 }
@@ -33,14 +32,11 @@ NULL_VALUE: str = 'NaN'
 @router.get(urls.avr_claims_all)
 @router.get(urls.avr_claims_actual)
 @router.get(urls.avr_claims_not_actual)
-@router.get(urls.avr_dgu_all)
 @router.get(urls.avr_dgu_actual)
 @router.get(urls.avr_dgu_not_actual)
-@router.post(urls.home_avr)
 @router.post(urls.avr_claims_all)
 @router.post(urls.avr_claims_actual)
 @router.post(urls.avr_claims_not_actual)
-@router.post(urls.avr_dgu_all)
 @router.post(urls.avr_dgu_actual)
 @router.post(urls.avr_dgu_not_actual)
 async def handle_home_avr(
@@ -49,6 +45,11 @@ async def handle_home_avr(
     """Поиск АВР"""
     current_path = request.url.path
     search_query = search_query.strip()
+
+    if current_path == urls.home_avr:
+        return RedirectResponse(
+            url=urls.avr_claims_all, status_code=status.HTTP_303_SEE_OTHER
+        )
 
     if request.method == 'POST' and not search_query:
         return RedirectResponse(
@@ -74,16 +75,9 @@ async def handle_home_avr(
 
 async def fetch_data(current_path: str, search_query: str):
     is_status_relevant = RELEVANT_STATUS.get(current_path)
-    if current_path == urls.home_avr:
-        return sql_queries(
-            select_avr(
-                null_value=NULL_VALUE,
-                number=search_query,
-                is_status_relevant=is_status_relevant
-            ), 'avr'
-        ), 'home.html', current_path
-
-    if current_path.startswith(urls.avr_claims_all):
+    if current_path in (
+        urls.avr_claims_all, urls.avr_claims_actual, urls.avr_claims_not_actual
+    ):
         table = sql_queries(
             select_avr(
                 null_value=NULL_VALUE,
@@ -115,9 +109,8 @@ async def fetch_data(current_path: str, search_query: str):
             select_avr(
                 null_value=NULL_VALUE,
                 number=search_query,
-                is_status_relevant=None,
-                filter_power_supply=True
+                is_status_relevant=None
             ), 'avr'
         )
-        current_path = urls.avr_dgu_all
+        current_path = urls.avr_claims_all
     return table, 'claims.html', current_path

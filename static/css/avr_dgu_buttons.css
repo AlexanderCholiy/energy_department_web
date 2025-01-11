@@ -1,0 +1,31 @@
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-block: 20px;
+    gap: 10px;
+}
+
+.toggle-button {
+    padding: 5px 10px; 
+    background-color: none;
+    color: var(--dark-add-color);
+    border: 1px solid var(--light-add-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color var(--transition), transformvar(--transition);
+}
+
+.toggle-button:hover {
+    background-color: var(--light-blue-color);
+    color: var(--light-color);
+    font-weight: 500;
+}
+
+.toggle-button:active {
+    transform: scale(0.98);
+}
+
+.toggle-button.active {
+    background-color: var(--light-blue-color);
+    color: var(--light-color);
+}

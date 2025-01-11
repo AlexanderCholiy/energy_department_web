@@ -20,7 +20,7 @@ init(autoreset=True)
 
 CURRENT_DIR: str = os.path.dirname(__file__)
 
-app = FastAPI(debug=False, title='UPTC&AVR', version='1.1')
+app = FastAPI(debug=False, title='UPTC&AVR', version='1.2')
 app.include_router(authorization_routes.router)
 app.include_router(user_routes.router)
 app.include_router(api_routes.router)

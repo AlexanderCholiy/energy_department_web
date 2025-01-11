@@ -19,9 +19,10 @@ class URLS:
     avr_claims_actual: str = f'{AVR_PREFIX}{AVR_CLAIMS}/actual'
     avr_claims_not_actual: str = f'{AVR_PREFIX}{AVR_CLAIMS}/not_actual'
 
-    avr_dgu_all: str = f'{AVR_PREFIX}{AVR_DGU}'
-    avr_dgu_actual: str = f'{AVR_PREFIX}{AVR_DGU}/actual'
-    avr_dgu_not_actual: str = f'{AVR_PREFIX}{AVR_DGU}/not_actual'
+    avr_dgu_actual: str = f'{avr_claims_actual}{AVR_DGU}'
+    avr_dgu_not_actual: str = f'{avr_claims_not_actual}{AVR_DGU}'
+
+    avr_api_claims: str = f'{AVR_PREFIX}/api{AVR_CLAIMS}/json'
 
     home_uptc: str = UPTC_PREFIX
 
