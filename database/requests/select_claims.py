@@ -10,7 +10,7 @@ CLAIMS_COLUMNS: list[str] = [
 def select_claims(
     null_value: str = 'NaN',
     personal_area_id: list[int] = [1, 2, 3, 4, 5, 6],
-    limit: Optional[int] = 1000,
+    limit: Optional[int] = 10000,
     number: Optional[str] = None,
     claim_id: Optional[int] = None,
     claim_number: Optional[int] = None,
@@ -46,7 +46,9 @@ def select_claims(
         COALESCE(pa.name, '{null_value}') AS "Личный кабинет",
         COALESCE(d.name, '{null_value}') AS "Балансодержатель",
         COALESCE(const_1030.constant_text, '{null_value}') AS "Дата заявки",
-        COALESCE(const_1040.constant_text, '{null_value}') AS "Ссылка на ЛК",
+        COALESCE(
+            const_1040.constant_text, pa.link, '{null_value}'
+        ) AS "Ссылка на ЛК",
         COALESCE(const_1090.constant_text, '{null_value}') AS "Комментарии",
         COALESCE(const_1100.constant_text, '{null_value}') AS "Адрес объекта"
     FROM

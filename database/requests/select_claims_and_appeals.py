@@ -2,7 +2,9 @@ from typing import Optional
 
 
 def select_claims_and_appeals(
-    null_value: str = 'NaN', number: Optional[str] = None
+    null_value: str = 'NaN',
+    number: Optional[str] = None,
+    limit: Optional[int] = 10000
 ) -> str:
     where_clause_appeals = (
         f'WHERE CAST(ms.message_number AS TEXT) LIKE \'%{number}%\''
@@ -21,7 +23,9 @@ def select_claims_and_appeals(
         TO_CHAR(st.time_stamp, 'YYYY-MM-DD HH24:MI') AS "Дата обновления",
         COALESCE(pa.name, '{null_value}') AS "Личный кабинет",
         COALESCE(d.name, '{null_value}') AS "Балансодержатель",
-        COALESCE(const_1040.constant_text, '{null_value}') AS "Ссылка на ЛК"
+        COALESCE(
+            const_1040.constant_text, pa.link '{null_value}'
+        ) AS "Ссылка на ЛК"
     FROM
         messages AS ms
     LEFT JOIN (
@@ -67,5 +71,5 @@ def select_claims_and_appeals(
 
     ORDER BY
         "Дата обновления" DESC
-    LIMIT 1000;
+     {'LIMIT ' + str(limit) if limit is not None else ''};
     '''

@@ -11,7 +11,7 @@ APPEALS_COLUMNS: list[str] = [
 def select_appeals(
     null_value: str = 'NaN',
     personal_area_id: list[int] = [1, 2, 3, 4, 5, 6],
-    limit: Optional[int] = 1000,
+    limit: Optional[int] = 10000,
     number: Optional[str] = None,
     appeal_id: Optional[int] = None,
     claim_number: Optional[int] = None,
@@ -51,7 +51,9 @@ def select_appeals(
         ) AS "Сетевая организация",
         COALESCE(const_1020.constant_text, '{null_value}') AS "Филиал",
         COALESCE(const_2030.constant_text, '{null_value}') AS "Дата обращения",
-        COALESCE(const_1040.constant_text, '{null_value}') AS "Ссылка на ЛК",
+        COALESCE(
+            const_1040.constant_text, pa.link, '{null_value}'
+        ) AS "Ссылка на ЛК",
         COALESCE(const_2050.constant_text, '{null_value}') AS "Тема обращения",
         COALESCE(
             const_2060.constant_text, '{null_value}'
