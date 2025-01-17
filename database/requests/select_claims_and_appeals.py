@@ -24,7 +24,7 @@ def select_claims_and_appeals(
         COALESCE(pa.name, '{null_value}') AS "Личный кабинет",
         COALESCE(d.name, '{null_value}') AS "Балансодержатель",
         COALESCE(
-            const_1040.constant_text, pa.link '{null_value}'
+            const_1040.constant_text, pa.link, '{null_value}'
         ) AS "Ссылка на ЛК"
     FROM
         messages AS ms
@@ -52,7 +52,9 @@ def select_claims_and_appeals(
         TO_CHAR(st.time_stamp, 'YYYY-MM-DD HH24:MI') AS "Дата обновления",
         COALESCE(pa.name, '{null_value}') AS "Личный кабинет",
         COALESCE(d.name, '{null_value}') AS "Балансодержатель",
-        COALESCE(const_1040.constant_text, '{null_value}') AS "Ссылка на ЛК"
+        COALESCE(
+            const_1040.constant_text, pa.link, '{null_value}'
+        ) AS "Ссылка на ЛК"
     FROM
         claims AS cl
     LEFT JOIN (
