@@ -8,7 +8,7 @@
         </div>
         <form action="{{ search_url }}" method="POST" id="searchForm" class="search-form">
             <div class="search-input-container">
-                <input type="text" id="SearchField" name="search_query" placeholder="Поиск..." value="{{ search_query | default('') }}">
+                <input type="text" id="SearchField" name="search_query" placeholder="Поиск..." value="{{ search_query | default('') }}" title="Введите номер или адрес заявки/обращения." >
                 <button type="submit" class="search-button" title="Поиск">
                     <i class='bx bx-search'></i>
                 </button>

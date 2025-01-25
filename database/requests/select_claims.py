@@ -10,8 +10,8 @@ CLAIMS_COLUMNS: list[str] = [
 def select_claims(
     null_value: str = 'NaN',
     personal_area_id: list[int] = [1, 2, 3, 4, 5, 6],
-    limit: Optional[int] = 10000,
-    number: Optional[str] = None,
+    limit: Optional[int] = 20000,
+    search_query: Optional[str] = None,
     claim_id: Optional[int] = None,
     claim_number: Optional[int] = None,
     declarant_name: Optional[str] = None,
@@ -19,10 +19,13 @@ def select_claims(
 ) -> str:
     """Этот запрос также используется для отправки данных в json формате."""
 
-    if number:
-        where_clause_claims = (
-            "AND CAST(cl.claim_number AS TEXT) LIKE '%" + str(number) + "%'"
-        )
+    if search_query:
+        where_clause_claims = (f'''
+            AND (
+                CAST(cl.claim_number AS TEXT) LIKE '%{search_query}%'
+                OR const_1100.constant_text LIKE '%{search_query}%'
+            )
+        ''')
     elif claim_id:
         where_clause_claims = (
             f"AND cl.id = '{claim_id}'"

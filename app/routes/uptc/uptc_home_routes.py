@@ -109,14 +109,14 @@ async def fetch_data(
     if current_path == urls.home_uptc:
         return sql_queries(
             select_claims_and_appeals(
-                number=search_query, null_value=NULL_VALUE
+                search_query=search_query, null_value=NULL_VALUE
             ), 'tech_pris'
         ), 'home.html', current_path
 
     if current_path.startswith(urls.uptc_appeals_all):
         table = sql_queries(
             select_appeals(
-                number=search_query,
+                search_query=search_query,
                 personal_area_id=personal_area_id,
                 null_value=NULL_VALUE
             ), 'tech_pris'
@@ -124,7 +124,7 @@ async def fetch_data(
         if not table:
             table = sql_queries(
                 select_appeals(
-                    number=search_query, null_value=NULL_VALUE
+                    search_query=search_query, null_value=NULL_VALUE
                 ), 'tech_pris'
             )
             current_path = urls.uptc_appeals_all
@@ -132,7 +132,7 @@ async def fetch_data(
 
     table = sql_queries(
         select_claims(
-            number=search_query,
+            search_query=search_query,
             personal_area_id=personal_area_id,
             null_value=NULL_VALUE
         ), 'tech_pris'
@@ -140,7 +140,7 @@ async def fetch_data(
     if not table:
         table = sql_queries(
             select_claims(
-                number=search_query, null_value=NULL_VALUE
+                search_query=search_query, null_value=NULL_VALUE
             ), 'tech_pris'
         )
         current_path = urls.uptc_claims_all

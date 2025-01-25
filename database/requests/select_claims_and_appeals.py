@@ -3,16 +3,20 @@ from typing import Optional
 
 def select_claims_and_appeals(
     null_value: str = 'NaN',
-    number: Optional[str] = None,
-    limit: Optional[int] = 10000
+    search_query: Optional[str] = None,
+    limit: Optional[int] = 1000
 ) -> str:
-    where_clause_appeals = (
-        f'WHERE CAST(ms.message_number AS TEXT) LIKE \'%{number}%\''
-    ) if number else ''
+    where_clause_appeals = (f'''
+        WHERE
+            CAST(ms.message_number AS TEXT) LIKE '%{search_query}%'
+            OR const_1100.constant_text LIKE '%{search_query}%'
+    ''') if search_query else ''
 
-    where_clause_claims = (
-        f'WHERE CAST(cl.claim_number AS TEXT) LIKE \'%{number}%\''
-    ) if number else ''
+    where_clause_claims = (f'''
+        WHERE
+            CAST(cl.claim_number AS TEXT) LIKE '%{search_query}%'
+            OR const_1100.constant_text LIKE '%{search_query}%'
+    ''') if search_query else ''
 
     return f'''
     SELECT
@@ -25,7 +29,13 @@ def select_claims_and_appeals(
         COALESCE(d.name, '{null_value}') AS "Балансодержатель",
         COALESCE(
             const_1040.constant_text, pa.link, '{null_value}'
-        ) AS "Ссылка на ЛК"
+        ) AS "Ссылка на ЛК",
+        COALESCE(
+            const_2030.constant_text, '{null_value}'
+        ) AS "Дата",
+        COALESCE(
+            const_1100.constant_text, '{null_value}'
+        ) AS "Адрес объекта"
     FROM
         messages AS ms
     LEFT JOIN (
@@ -40,6 +50,12 @@ def select_claims_and_appeals(
     LEFT JOIN
         messages_constants AS const_1040 ON const_1040.message_id = ms.id
         AND const_1040.constant_type = 1040
+    LEFT JOIN
+        messages_constants AS const_2030 ON const_2030.message_id = ms.id
+        AND const_2030.constant_type = 2030
+    LEFT JOIN
+        messages_constants AS const_1100 ON const_1100.message_id = ms.id
+        AND const_1100.constant_type = 1100
     {where_clause_appeals}
 
     UNION ALL
@@ -54,7 +70,13 @@ def select_claims_and_appeals(
         COALESCE(d.name, '{null_value}') AS "Балансодержатель",
         COALESCE(
             const_1040.constant_text, pa.link, '{null_value}'
-        ) AS "Ссылка на ЛК"
+        ) AS "Ссылка на ЛК",
+        COALESCE(
+            const_1030.constant_text, '{null_value}'
+        ) AS "Дата",
+        COALESCE(
+            const_1100.constant_text, '{null_value}'
+        ) AS "Адрес объекта"
     FROM
         claims AS cl
     LEFT JOIN (
@@ -69,6 +91,12 @@ def select_claims_and_appeals(
     LEFT JOIN
         constants AS const_1040 ON const_1040.claim_id = cl.id
         AND const_1040.constant_type = 1040
+    LEFT JOIN
+        constants AS const_1030 ON const_1030.claim_id = cl.id
+        AND const_1030.constant_type = 1030
+    LEFT JOIN
+        constants AS const_1100 ON const_1100.claim_id = cl.id
+        AND const_1100.constant_type = 1100
     {where_clause_claims}
 
     ORDER BY
