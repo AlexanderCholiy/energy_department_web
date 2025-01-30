@@ -5,8 +5,10 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/datatables.css') }}">
 <style>
-    #DataTable thead th:nth-child(9), 
-    #DataTable tbody td:nth-child(9),
+    #DataTable thead th:nth-child(10), 
+    #DataTable tbody td:nth-child(10),
+    #DataTable thead th:nth-child(7), 
+    #DataTable tbody td:nth-child(7),
     #DataTable thead th:nth-child(6), 
     #DataTable tbody td:nth-child(6),
     #DataTable thead th:nth-child(5), 
@@ -22,11 +24,11 @@
         width: 9%;
     }
 
+    #DataTable thead th:nth-child(9), 
+    #DataTable tbody td:nth-child(9),
     #DataTable thead th:nth-child(8), 
-    #DataTable tbody td:nth-child(8),
-    #DataTable thead th:nth-child(7), 
-    #DataTable tbody td:nth-child(7) {
-        width: 18.5%;
+    #DataTable tbody td:nth-child(8) {
+        width: 14%;
     }
 </style>
 {% endblock %}
