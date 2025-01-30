@@ -23,7 +23,6 @@ templates = Jinja2Templates(directory=directory)
 def set_error_message(request, message: str) -> RedirectResponse:
     request.session['message'] = message
     request.session['message_type'] = 'error'
-    print(message)
     return RedirectResponse(
         url=request.headers.get('referer'),
         status_code=status.HTTP_303_SEE_OTHER
