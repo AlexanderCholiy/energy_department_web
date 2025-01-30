@@ -4,7 +4,7 @@ APPEALS_COLUMNS: list[str] = [
     "ID", "Номер обращения", "Дата статуса", "Статус", "Дата обновления",
     "Личный кабинет", "Балансодержатель", "Сетевая организация", "Филиал",
     "Дата обращения", "Ссылка на ЛК", "Тема обращения", "Текст обращения",
-    "Адрес объекта", "Номер заявки"
+    "Адрес объекта", "Номер заявки", "Шифр опоры", "Внутренний шифр опоры"
 ]
 
 
@@ -42,6 +42,10 @@ def select_appeals(
 
     return (f'''
     SELECT
+        main_table.*,
+        ts.siteid AS "Внутренний шифр опоры"
+    FROM (
+    SELECT
         ms.id AS "ID",
         ms.message_number AS "Номер обращения",
         COALESCE(st.status_time, '{null_value}') AS "Дата статуса",
@@ -62,7 +66,8 @@ def select_appeals(
             const_2060.constant_text, '{null_value}'
         ) AS "Текст обращения",
         COALESCE(const_1100.constant_text, '{null_value}') AS "Адрес объекта",
-        COALESCE(const_2070.constant_text, '{null_value}') AS "Номер заявки"
+        COALESCE(const_2070.constant_text, '{null_value}') AS "Номер заявки",
+        COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры"
     FROM
         messages AS ms
     LEFT JOIN (
@@ -98,12 +103,18 @@ def select_appeals(
     LEFT JOIN
         messages_constants AS const_2070 ON const_2070.message_id = ms.id
         AND const_2070.constant_type = 2070
+    LEFT JOIN
+        messages_constants AS const_1000 ON const_1000.message_id = ms.id
+        AND const_1000.constant_type = 1000
     WHERE
         ms.personal_area_id IN (
             {', '.join(map(str, personal_area_id))}
         )
         {where_clause_appeals}
+    ) AS main_table
+    LEFT JOIN
+        towerstore AS ts ON main_table."Шифр опоры" = ts.ts_id
     ORDER BY
-        st.time_stamp DESC
+        "Дата обновления" DESC
     {'LIMIT ' + str(limit) if limit is not None else ''};
     ''')

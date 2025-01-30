@@ -1,15 +1,22 @@
 import os
 
-from fastapi import APIRouter, Depends, Request, Form, Path, HTTPException
-from fastapi.responses import Response
+from fastapi import (
+    APIRouter, Depends, Form, HTTPException, Path, Request, status
+)
+from fastapi.responses import Response, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.common.check_authorization import check_authorization
-from database.db_users import get_db
 from database.db_base import sql_queries
-from database.requests.select_claims import select_claims
+from database.db_users import get_db
 from database.requests.select_appeals import select_appeals
+from database.requests.select_claims import select_claims
+from database.requests.select_pole_from_ts import select_pole_from_ts
+from database.requests.update_claims_constants import update_claims_constants
+from database.requests.update_messages_constants import (
+    update_messages_constants
+)
 from settings.urls import urls
 
 CURRENT_DIR: str = os.path.dirname(__file__)
@@ -37,7 +44,7 @@ NULL_VALUE: str = 'NaN'
 
 @router.get(urls.uptc_claims_all + '/{number_id}')
 @router.get(urls.uptc_appeals_all + '/{number_id}')
-async def handle_home_uptc(
+async def details_uptc(
     request: Request,
     number_id: int = Path(..., ge=0),
     db: Session = Depends(get_db),
@@ -111,3 +118,66 @@ async def handle_home_uptc(
     }
 
     return templates.TemplateResponse(template_name, context)
+
+
+@router.post(urls.uptc_claims_all + '/{number_id}')
+@router.post(urls.uptc_appeals_all + '/{number_id}')
+async def update_details_uptc(
+    request: Request,
+    number_id: int = Path(..., ge=0),
+    db: Session = Depends(get_db),
+    pole: str = Form('')
+) -> Response:
+    user, redirect_response = await check_authorization(request, db)
+    if redirect_response:
+        return redirect_response
+
+    pole = pole.strip() if pole and len(pole) > 4 else None
+    if not pole:
+        return _redirect_with_message(
+            request, 'Некорректный шифр опоры', 'error'
+        )
+
+    check_pole = sql_queries(select_pole_from_ts(pole), 'tech_pris')
+
+    if not check_pole:
+        return _redirect_with_message(
+            request, f'Опора "{pole}" не найдена.', 'error'
+        )
+
+    if len(check_pole) > 1:
+        return _redirect_with_message(
+            request, f'Уточните шифр опоры "{pole}".', 'error'
+        )
+
+    if request.url.path.startswith(urls.uptc_claims_all):
+        if not sql_queries(
+            update_claims_constants(number_id, 1000, check_pole[0][0]),
+            'tech_pris'
+        ):
+            return _redirect_with_message(
+                request, 'Возникла ошибка при выполнении запроса.', 'error'
+            )
+    else:
+        if not sql_queries(
+            update_messages_constants(number_id, 1000, check_pole[0][0]),
+            'tech_pris'
+        ):
+            return _redirect_with_message(
+                request, 'Возникла ошибка при выполнении запроса.', 'error'
+            )
+
+    return _redirect_with_message(
+        request, 'Данные успешно обновлены!', 'success'
+    )
+
+
+def _redirect_with_message(
+    request: Request, message: str, message_type: str
+) -> RedirectResponse:
+    request.session['message'] = message
+    request.session['message_type'] = message_type
+    return RedirectResponse(
+        url=request.headers.get('referer'),
+        status_code=status.HTTP_303_SEE_OTHER
+    )

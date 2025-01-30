@@ -2,13 +2,20 @@
     border: 2px solid var(--dark-blue-color);
 }
 
+.tab-footer {
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px solid var(--dark-blue-color);
+}
+
 .tab-footer-button  {
     background-color: var(--dark-blue-color);
     border-right: 2px solid var(--dark-blue-color);
 }
 
-.tab-footer {
-    border-top: 2px solid var(--dark-blue-color);
+.tab-footer-button:last-child {
+    border-right: none;
+    border-left: 2px solid var(--dark-blue-color);
 }
 
 .tab-button.active::after {

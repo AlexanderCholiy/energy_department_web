@@ -18,9 +18,3 @@ def get_password_hash(password: str) -> str:
     храниться в БД.
     """
     return pwd_context.hash(password)
-
-
-if __name__ == '__main__':
-    password = 'qwerty16'
-    hashed_password = get_password_hash(password=password)
-    print(hashed_password)

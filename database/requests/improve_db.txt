@@ -1,0 +1,21 @@
+CREATE INDEX idx_messages_personal_area ON messages(personal_area_id);
+CREATE INDEX idx_messages_constants_message ON messages_constants(message_id);
+CREATE INDEX idx_messages_states_message ON messages_states(message_id);
+CREATE INDEX idx_messages_states_time_stamp ON messages_states(time_stamp);
+
+CREATE INDEX idx_claims_personal_area ON claims(personal_area_id);
+CREATE INDEX idx_claims_constants ON constants(claim_id);
+CREATE INDEX idx_claims_states_claim ON claims_states(claim_id);
+CREATE INDEX idx_claims_states_time_stamp ON claims_states(time_stamp);
+
+CREATE INDEX idx_declarant_id ON declarant(id);
+CREATE INDEX idx_personal_areas_id ON personal_areas(id);
+
+
+-- комбинация message_id in message_type в таблице messages_constants должна
+-- быть уникальной, тоже самое и с claims
+ALTER TABLE messages_constants
+ADD CONSTRAINT unique_message_constant UNIQUE (message_id, constant_type);
+
+ALTER TABLE constants
+ADD CONSTRAINT unique_claims_constant UNIQUE (claim_id, constant_type);

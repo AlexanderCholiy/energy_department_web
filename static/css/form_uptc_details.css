@@ -1,0 +1,49 @@
+.pole_number_field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pole_field {
+    display: flex;
+    align-items: center;
+}
+
+.pole_field label {
+    flex: 0 0 120px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: var(--dark-add-color);
+}
+
+.pole_field input {
+    margin-bottom: 20px;
+}
+
+.pole_field input[type="text"] {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid var(--light-add-color);
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.pole_field input[type="text"]:focus {
+    border-color: var(--dark-blue-color);
+    box-shadow: 0 0 3px var(--light-add-color);
+    outline: none;
+}
+
+.pole_field input[type="text"]:valid {
+    border-color: var(--dark-add-color);
+}
+
+.tab-footer-button.disabled {
+    background-color: var(--light-add-background-color);
+}
+
+.tab-footer-button.disabled:hover {
+    background-color: var(--light-add-background-color);
+    color: var(--light-add-color);
+}

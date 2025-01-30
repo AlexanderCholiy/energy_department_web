@@ -20,6 +20,10 @@ def select_claims_and_appeals(
 
     return f'''
     SELECT
+        main_table.*,
+        ts.siteid AS "Внутренний шифр опоры"
+    FROM (
+    SELECT
         'обращение' AS "Тип",
         ms.id AS "ID",
         ms.message_number AS "Номер",
@@ -35,7 +39,8 @@ def select_claims_and_appeals(
         ) AS "Дата",
         COALESCE(
             const_1100.constant_text, '{null_value}'
-        ) AS "Адрес объекта"
+        ) AS "Адрес объекта",
+        COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры"
     FROM
         messages AS ms
     LEFT JOIN (
@@ -56,10 +61,20 @@ def select_claims_and_appeals(
     LEFT JOIN
         messages_constants AS const_1100 ON const_1100.message_id = ms.id
         AND const_1100.constant_type = 1100
+    LEFT JOIN
+        messages_constants AS const_1000 ON const_1000.message_id = ms.id
+        AND const_1000.constant_type = 1000
     {where_clause_appeals}
+    ) AS main_table
+    LEFT JOIN
+        towerstore AS ts ON main_table."Шифр опоры" = ts.ts_id
 
     UNION ALL
 
+    SELECT
+        main_table.*,
+        ts.siteid AS "Внутренний шифр опоры"
+    FROM (
     SELECT
         'заявка' AS "Тип",
         cl.id AS "ID",
@@ -76,7 +91,8 @@ def select_claims_and_appeals(
         ) AS "Дата",
         COALESCE(
             const_1100.constant_text, '{null_value}'
-        ) AS "Адрес объекта"
+        ) AS "Адрес объекта",
+        COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры"
     FROM
         claims AS cl
     LEFT JOIN (
@@ -97,9 +113,15 @@ def select_claims_and_appeals(
     LEFT JOIN
         constants AS const_1100 ON const_1100.claim_id = cl.id
         AND const_1100.constant_type = 1100
+    LEFT JOIN
+        constants AS const_1000 ON const_1000.claim_id = cl.id
+        AND const_1000.constant_type = 1000
     {where_clause_claims}
+    ) AS main_table
+    LEFT JOIN
+        towerstore AS ts ON main_table."Шифр опоры" = ts.ts_id
 
     ORDER BY
         "Дата обновления" DESC
-     {'LIMIT ' + str(limit) if limit is not None else ''};
+    {'LIMIT ' + str(limit) if limit is not None else ''};
     '''

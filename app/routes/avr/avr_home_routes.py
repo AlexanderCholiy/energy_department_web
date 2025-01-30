@@ -1,8 +1,8 @@
 import os
 from typing import Optional
 
-from fastapi import APIRouter, Request, Form, status
-from fastapi.responses import Response, RedirectResponse
+from fastapi import APIRouter, Form, Request, status
+from fastapi.responses import RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 
 from database.db_base import sql_queries

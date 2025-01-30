@@ -42,6 +42,7 @@
                 <th>Дата обращения</th>
                 <th>Сетевая организация</th>
                 <th>Филиал</th>
+                <th>Шифр опоры</th>
                 <th>Адрес объекта</th>
                 <th>Статус</th>
                 <th>Дата обновления</th>
@@ -65,6 +66,13 @@
                         <td>{{ row[9] }}</td>
                         <td>{{ row[7] }}</td>
                         <td>{{ row[8] }}</td>
+                        <td>
+                            {% if row[15] != 'NaN' %}
+                                <a href="https://fridge.newtowers.ru/site/passport/{{ row[16] | urlencode }}" target="_blank">{{ row[15] }}</a>
+                            {% else %}
+                                {{ row[15] }}
+                            {% endif %}
+                        </td>
                         <td>{{ row[13] }}</td>
                         <td>{{ row[3] }}</td>
                         <td>{{ row[4] }}</td>
@@ -80,6 +88,7 @@
                 <th title="Дата обращения"><input type="text" placeholder="Поиск..." /></th>
                 <th title="Сетевая организация"><input type="text" placeholder="Поиск..." /></th>
                 <th title="Филиал"><input type="text" placeholder="Поиск..." /></th>
+                <th title="Шифр опоры"><input type="text" placeholder="Поиск..." /></th>
                 <th title="Адрес объекта"><input type="text" placeholder="Поиск..." /></th>
                 <th title="Статус"><input type="text" placeholder="Поиск..." /></th>
                 <th title="Дата обновления"><input type="text" placeholder="Поиск..." /></th>

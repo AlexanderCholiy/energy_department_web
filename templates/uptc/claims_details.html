@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/tabs.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/tabs_claims.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/small_datatables.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/form_uptc_details.css') }}">
 <style>
     #DataTable_1 thead th:nth-child(3), 
     #DataTable_1 tbody td:nth-child(3),
@@ -35,107 +36,119 @@
 
 {% block body %}
 <section class="container">
-    <div class="tabs">
-        <div class="tab-nav">
-            <button class="tab-button active" onclick="showTab('tab1')">Информация о заявке</button>
-            <button class="tab-button" onclick="showTab('tab2')">Статус</button>
-            <button class="tab-button" onclick="showTab('tab3')">Обращения</button>
-        </div>
-        
-        <div class="tab-content" id="tab1">
-            <h2>Номер {{ table_claims[0][1] }}</h2>
-            <div class="info-item">
-                <span class="info-label">Личный кабинет:</span>
-                <span class="info-text">
-                    {% if table_claims[0][8] != null_value %}  
-                        <a href="{{ table_claims[0][8] }}" target="_blank">{{ table_claims[0][5] }}</a>  
-                    {% else %}
-                        {{ table_claims[0][5] }}
-                    {% endif %}
-                </span>
+    <form method="POST" id="myForm">
+        <div class="tabs">
+            <div class="tab-nav">
+                <button class="tab-button active" onclick="showTab('tab1', event)">Информация о заявке</button>
+                <button class="tab-button" onclick="showTab('tab2', event)">Статус</button>
+                <button class="tab-button" onclick="showTab('tab3', event)">Обращения</button>
             </div>
             
-            <div class="info-item">
-                <span class="info-label">Балансодержатель:</span>
-                <span class="info-text">{{ table_claims[0][6] }}</span>
+            <div class="tab-content" id="tab1">
+                <div class="pole_number_field">
+                    <h2>Номер {{ table_claims[0][1] }}</h2>
+                    <div class="pole_field">
+                        <label for="pole">Шифр опоры:</label>
+                        <input id="pole" type="text" name="pole" value="{{ table_claims[0][11] if table_claims[0][11] != 'NaN' else '' }}" minlength="5" required>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Личный кабинет:</span>
+                    <span class="info-text">
+                        {% if table_claims[0][8] != null_value %}  
+                            <a href="{{ table_claims[0][8] }}" target="_blank">{{ table_claims[0][5] }}</a>  
+                        {% else %}
+                            {{ table_claims[0][5] }}
+                        {% endif %}
+                    </span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Балансодержатель:</span>
+                    <span class="info-text">{{ table_claims[0][6] }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Дата заявки:</span>
+                    <span class="info-text">{{ table_claims[0][7] }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Адрес объекта:</span>
+                    <span class="info-text">{{ table_claims[0][10] }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Комментарии:</span>
+                    <span class="info-text">{{ table_claims[0][9] }}</span>
+                </div>
             </div>
             
-            <div class="info-item">
-                <span class="info-label">Дата заявки:</span>
-                <span class="info-text">{{ table_claims[0][7] }}</span>
-            </div>
-            
-            <div class="info-item">
-                <span class="info-label">Адрес объекта:</span>
-                <span class="info-text">{{ table_claims[0][10] }}</span>
-            </div>
-            
-            <div class="info-item">
-                <span class="info-label">Комментарии:</span>
-                <span class="info-text">{{ table_claims[0][9] }}</span>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="tab2" style="display: none;">
-            <table class="datatable" id="DataTable_1">
-                <thead>
-                    <tr>
-                        <th>Статус</th>
-                        <th>Дата статуса</th>
-                        <th>Дата обновления</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if table_claims %}
-                        {% for row in table_claims %}
-                            <td>{{ row[3] }}</td>
-                            <td>{{ row[2] }}</td>
-                            <td>{{ row[4] }}</td>
-                        {% endfor %}
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="tab-content" id="tab3" style="display: none;">
-            <table class="datatable" id="DataTable_2">
-                <thead>
-                    <tr>
-                        <th>Номер обращения</th>
-                        <th>Дата обращения</th>
-                        <th>Статус</th>
-                        <th>Дата статуса</th>
-                        <th>Дата обновления</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if table_appeals %}
-                        {% for row in table_appeals %}
-                            <tr>
-                                <td>
-                                    <a href="{{ urls.uptc_appeals_all }}/{{ row[0]|urlencode }}">{{ row[1] }}</a>
-                                </td>
-                                <td>{{ row[9] }}</td>
-                                <td>{{ row[3] }}</td>
-                                <td>{{ row[2] }}</td>
-                                <td>{{ row[4] }}</td>
-                            </tr>
-                        {% endfor %}
-                    {% else %}
+            <div class="tab-content" id="tab2" style="display: none;">
+                <table class="datatable" id="DataTable_1">
+                    <thead>
                         <tr>
-                            <td colspan="5" class="empty-table">Ничего не найдено</td>
+                            <th>Статус</th>
+                            <th>Дата статуса</th>
+                            <th>Дата обновления</th>
                         </tr>
-                    {% endif %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% if table_claims %}
+                            {% for row in table_claims %}
+                                <tr>
+                                    <td>{{ row[3] }}</td>
+                                    <td>{{ row[2] }}</td>
+                                    <td>{{ row[4] }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tab-content" id="tab3" style="display: none;">
+                <table class="datatable" id="DataTable_2">
+                    <thead>
+                        <tr>
+                            <th>Номер обращения</th>
+                            <th>Дата обращения</th>
+                            <th>Статус</th>
+                            <th>Дата статуса</th>
+                            <th>Дата обновления</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if table_appeals %}
+                            {% for row in table_appeals %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ urls.uptc_appeals_all }}/{{ row[0]|urlencode }}">{{ row[1] }}</a>
+                                    </td>
+                                    <td>{{ row[9] }}</td>
+                                    <td>{{ row[3] }}</td>
+                                    <td>{{ row[2] }}</td>
+                                    <td>{{ row[4] }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="empty-table">Ничего не найдено</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-footer">
+                <a href="{{ urls.uptc_claims_all }}" class="tab-footer-button">Вернуться к списку заявок</a>
+                <button type="submit" id="submitButton" class="tab-footer-button">Отправить</button>
+            </div>
         </div>
-        <div class="tab-footer">
-            <a href="{{ urls.uptc_claims_all }}" class="tab-footer-button">Вернуться к списку заявок</a>
-        </div>
-    </div>
+    </form>
 </section>
 {% endblock %}
 
 {% block extra_scripts %}
 <script src="{{ url_for('static', path='js/cards_switch.js') }}"></script>
+<script src="{{ url_for('static', path='js/uptc_submit_details_button.js') }}"></script>
 {% endblock %}

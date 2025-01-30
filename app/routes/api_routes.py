@@ -1,16 +1,16 @@
-import os
 import json
-from typing import Dict, List, Callable, Tuple
+import os
+from typing import Callable, Dict, List, Tuple
 
-from pandas import DataFrame
-from fastapi import APIRouter, Request, status, HTTPException
+from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.responses import JSONResponse
 from fastapi.templating import Jinja2Templates
+from pandas import DataFrame
 
 from database.db_base import sql_queries
-from database.requests.select_claims import select_claims, CLAIMS_COLUMNS
-from database.requests.select_appeals import select_appeals, APPEALS_COLUMNS
-from database.requests.select_avr import select_avr, AVR_COLUMNS
+from database.requests.select_appeals import APPEALS_COLUMNS, select_appeals
+from database.requests.select_avr import AVR_COLUMNS, select_avr
+from database.requests.select_claims import CLAIMS_COLUMNS, select_claims
 from settings.urls import urls
 
 router = APIRouter()

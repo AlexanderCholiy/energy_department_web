@@ -7,12 +7,9 @@ from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
 from app.common.log_timer import log_timer
-from app.routes import authorization_routes
-from app.routes import user_routes
-from app.routes import api_routes
-from app.routes.uptc import uptc_home_routes
-from app.routes.uptc import uptc_details_routes
+from app.routes import api_routes, authorization_routes, user_routes
 from app.routes.avr import avr_home_routes
+from app.routes.uptc import uptc_details_routes, uptc_home_routes
 from settings.config import web_settings
 from settings.web_log_config import web_log_config
 

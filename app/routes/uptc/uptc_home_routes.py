@@ -1,18 +1,17 @@
 import os
 
-from fastapi import APIRouter, Depends, Request, Form, status
-from fastapi.responses import Response, RedirectResponse
+from fastapi import APIRouter, Depends, Form, Request, status
+from fastapi.responses import RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.common.check_authorization import check_authorization
-from database.db_users import get_db
 from database.db_base import sql_queries
-from database.requests.select_claims import select_claims
+from database.db_users import get_db
 from database.requests.select_appeals import select_appeals
-from database.requests.select_claims_and_appeals import (
+from database.requests.select_claims import select_claims
+from database.requests.select_claims_and_appeals import \
     select_claims_and_appeals
-)
 from settings.urls import urls
 
 router = APIRouter()

@@ -1,4 +1,9 @@
-function showTab(tabId) {
+function showTab(tabId, event) {
+    // Предотвращаем отправку формы
+    if (event) {
+        event.preventDefault();
+    }
+
     // Скрыть все табы
     const tabs = document.querySelectorAll('.tab-content');
     tabs.forEach(tab => {

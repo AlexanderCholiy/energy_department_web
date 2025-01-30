@@ -3,7 +3,7 @@ from typing import Optional
 CLAIMS_COLUMNS: list[str] = [
     "ID", "Номер заявки", "Дата статуса", "Статус", "Дата обновления",
     "Личный кабинет", "Балансодержатель", "Дата заявки", "Ссылка на ЛК",
-    "Комментарии", "Адрес объекта"
+    "Комментарии", "Адрес объекта", "Шифр опоры", "Внутренний шифр опоры"
 ]
 
 
@@ -41,6 +41,10 @@ def select_claims(
 
     return (f'''
     SELECT
+        main_table.*,
+        ts.siteid AS "Внутренний шифр опоры"
+    FROM (
+    SELECT
         cl.id AS "ID",
         cl.claim_number AS "Номер заявки",
         COALESCE(st.status_time, '{null_value}') AS "Дата статуса",
@@ -53,7 +57,8 @@ def select_claims(
             const_1040.constant_text, pa.link, '{null_value}'
         ) AS "Ссылка на ЛК",
         COALESCE(const_1090.constant_text, '{null_value}') AS "Комментарии",
-        COALESCE(const_1100.constant_text, '{null_value}') AS "Адрес объекта"
+        COALESCE(const_1100.constant_text, '{null_value}') AS "Адрес объекта",
+        COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры"
     FROM
         claims AS cl
     LEFT JOIN (
@@ -77,12 +82,18 @@ def select_claims(
     LEFT JOIN
         constants AS const_1100 ON const_1100.claim_id = cl.id
         AND const_1100.constant_type = 1100
+    LEFT JOIN
+        constants AS const_1000 ON const_1000.claim_id = cl.id
+        AND const_1000.constant_type = 1000
     WHERE
         cl.personal_area_id IN (
             {', '.join(map(str, personal_area_id))}
         )
         {where_clause_claims}
+    ) AS main_table
+    LEFT JOIN
+        towerstore AS ts ON main_table."Шифр опоры" = ts.ts_id
     ORDER BY
-        st.time_stamp DESC
+        "Дата обновления" DESC
     {'LIMIT ' + str(limit) if limit is not None else ''};
     ''')

@@ -23,10 +23,23 @@ def get_db():
 
 
 if __name__ == '__main__':
+    from app.common.generate_pswd import get_password_hash
+
+    useremail: str = input('Введите email пользователя: ').strip()
+    password: str = input('Введите пароль пользователя: ').strip()
+    if not password or not useremail:
+        raise ValueError('Email или пароль не могут быть пустыми.')
+    write_flag: bool = input(
+        f'Пользователь: {useremail}\nПароль: {password}\nПродолжить? (Y/N): '
+    ).lower() == 'y'
+
+    if not write_flag:
+        sys.exit(0)
+
     Base.metadata.create_all(engine)
     new_user = User(
-        useremail="p.makurov@newtowers.ru",
-        hashed_password="$argon2id$v=19$m=65536,t=3,p=4$zrlXyjmndG5NidEaQ+id0w$2MNlsN86ZWna74I38/eeqViksbXVeFmo6rE0SKHTfgo"
+        useremail=useremail,
+        hashed_password=get_password_hash(password)
     )
     db = next(get_db())
     db.add(new_user)
