@@ -24,6 +24,8 @@ def select_claims(
             AND (
                 CAST(cl.claim_number AS TEXT) LIKE '%{search_query}%'
                 OR const_1100.constant_text LIKE '%{search_query}%'
+                OR const_1000.constant_text LIKE '%{search_query}%'
+                OR const_1090.constant_text LIKE '%{search_query}%'
             )
         ''')
     elif claim_id:

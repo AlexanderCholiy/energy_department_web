@@ -25,6 +25,8 @@ def select_appeals(
             AND (
                 CAST(ms.message_number AS TEXT) LIKE '%{search_query}%'
                 OR const_1100.constant_text LIKE '%{search_query}%'
+                OR const_1000.constant_text LIKE '%{search_query}%'
+                OR const_2060.constant_text LIKE '%{search_query}%'
             )
         ''')
     elif appeal_id:

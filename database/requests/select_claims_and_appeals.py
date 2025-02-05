@@ -10,12 +10,16 @@ def select_claims_and_appeals(
         WHERE
             CAST(ms.message_number AS TEXT) LIKE '%{search_query}%'
             OR const_1100.constant_text LIKE '%{search_query}%'
+            OR const_1000.constant_text LIKE '%{search_query}%'
+            OR const_2060.constant_text LIKE '%{search_query}%'
     ''') if search_query else ''
 
     where_clause_claims = (f'''
         WHERE
             CAST(cl.claim_number AS TEXT) LIKE '%{search_query}%'
             OR const_1100.constant_text LIKE '%{search_query}%'
+            OR const_1000.constant_text LIKE '%{search_query}%'
+            OR const_1090.constant_text LIKE '%{search_query}%'
     ''') if search_query else ''
 
     return f'''
@@ -64,6 +68,9 @@ def select_claims_and_appeals(
     LEFT JOIN
         messages_constants AS const_1000 ON const_1000.message_id = ms.id
         AND const_1000.constant_type = 1000
+    LEFT JOIN
+        messages_constants AS const_2060 ON const_2060.message_id = ms.id
+        AND const_2060.constant_type = 2060
     {where_clause_appeals}
     ) AS main_table
     LEFT JOIN
@@ -116,6 +123,9 @@ def select_claims_and_appeals(
     LEFT JOIN
         constants AS const_1000 ON const_1000.claim_id = cl.id
         AND const_1000.constant_type = 1000
+    LEFT JOIN
+        constants AS const_1090 ON const_1090.claim_id = cl.id
+        AND const_1090.constant_type = 1090
     {where_clause_claims}
     ) AS main_table
     LEFT JOIN
