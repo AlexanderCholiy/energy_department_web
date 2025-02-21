@@ -8,7 +8,14 @@
         </div>
         <form action="{{ search_url }}" method="POST" id="searchForm" class="search-form">
             <div class="search-input-container">
-                <input type="text" id="SearchField" name="search_query" placeholder="Поиск..." value="{{ search_query | default('') }}" title="Введите номер или адрес заявки/обращения." >
+                <input type="text" id="SearchField" name="search_query" placeholder="Поиск..." value="{{ search_query | default('') }}" 
+                title="{% if urls.UPTC_APPEALS in current_path %}
+                введите номер обращения / адрес объекта / шифр опоры / текст обращения / сетевую организацию / филиал
+                {% elif urls.UPTC_CLAIMS in current_path %}
+                введите номер заявки / адрес объекта / шифр опоры / комментарий к заявке 
+                {% else %}
+                введите номер заявки / номер обращения / адрес объекта / шифр опоры / комментарий к заявке / текст обращения
+                {% endif %}" >
                 <button type="submit" class="search-button" title="Поиск">
                     <i class='bx bx-search'></i>
                 </button>

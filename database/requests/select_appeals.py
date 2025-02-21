@@ -27,6 +27,8 @@ def select_appeals(
                 OR const_1100.constant_text LIKE '%{search_query}%'
                 OR const_1000.constant_text LIKE '%{search_query}%'
                 OR const_2060.constant_text LIKE '%{search_query}%'
+                OR const_1010.constant_text LIKE '%{search_query}%'
+                OR const_1020.constant_text LIKE '%{search_query}%'
             )
         ''')
     elif appeal_id:
