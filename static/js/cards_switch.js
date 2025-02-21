@@ -18,5 +18,8 @@ function showTab(tabId, event) {
 
     // Показать выбранный таб
     document.getElementById(tabId).style.display = 'block';
-    document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
+    const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
 }

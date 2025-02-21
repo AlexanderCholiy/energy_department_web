@@ -53,8 +53,11 @@
                     <tr>
                         <td>{{ row[0] }}</td>
                         <td>
-                            {% if row[7] != null_value %}  
-                                <a href="{{ row[7] }}" target="_blank">{{ row[5] }}</a>  
+                            {% if row[7] != null_value and row[11] != null_value %}  
+                                <a href="{{ row[7] }}" target="_blank">{{ row[5] }}</a>,<br>
+                                <a href="{{ row[11] }}" target="_blank">ВХОДЯЩИЕ ДОКУМЕНТЫ</a>
+                            {% elif row[7] != null_value %}  
+                                <a href="{{ row[7] }}" target="_blank">{{ row[5] }}</a> 
                             {% else %}
                                 {{ row[5] }}
                             {% endif %}
@@ -65,8 +68,8 @@
                         </td>
                         <td>{{ row[8] }}</td>
                         <td>
-                            {% if row[10] != 'NaN' %}
-                                <a href="https://fridge.newtowers.ru/site/passport/{{ row[11] | urlencode }}" target="_blank">{{ row[10] }}</a>
+                            {% if row[10] != null_value %}
+                                <a href="https://fridge.newtowers.ru/site/passport/{{ row[12] | urlencode }}" target="_blank">{{ row[10] }}</a>
                             {% else %}
                                 {{ row[10] }}
                             {% endif %}

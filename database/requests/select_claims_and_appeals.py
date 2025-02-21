@@ -44,7 +44,10 @@ def select_claims_and_appeals(
         COALESCE(
             const_1100.constant_text, '{null_value}'
         ) AS "Адрес объекта",
-        COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры"
+        COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры",
+        COALESCE(
+            const_1050.constant_text, '{null_value}'
+        ) AS "Ссылка на документы в ЛК"
     FROM
         messages AS ms
     LEFT JOIN (
@@ -71,6 +74,9 @@ def select_claims_and_appeals(
     LEFT JOIN
         messages_constants AS const_2060 ON const_2060.message_id = ms.id
         AND const_2060.constant_type = 2060
+    LEFT JOIN
+        messages_constants AS const_1050 ON const_1050.message_id = ms.id
+        AND const_1050.constant_type = 1050
     {where_clause_appeals}
     ) AS main_table
     LEFT JOIN
@@ -99,7 +105,10 @@ def select_claims_and_appeals(
         COALESCE(
             const_1100.constant_text, '{null_value}'
         ) AS "Адрес объекта",
-        COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры"
+        COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры",
+        COALESCE(
+            const_1050.constant_text, '{null_value}'
+        ) AS "Ссылка на документы в ЛК"
     FROM
         claims AS cl
     LEFT JOIN (
@@ -126,6 +135,9 @@ def select_claims_and_appeals(
     LEFT JOIN
         constants AS const_1090 ON const_1090.claim_id = cl.id
         AND const_1090.constant_type = 1090
+    LEFT JOIN
+        constants AS const_1050 ON const_1050.claim_id = cl.id
+        AND const_1050.constant_type = 1050
     {where_clause_claims}
     ) AS main_table
     LEFT JOIN

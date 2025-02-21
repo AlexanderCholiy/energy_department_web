@@ -60,7 +60,10 @@ def select_claims(
         ) AS "Ссылка на ЛК",
         COALESCE(const_1090.constant_text, '{null_value}') AS "Комментарии",
         COALESCE(const_1100.constant_text, '{null_value}') AS "Адрес объекта",
-        COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры"
+        COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры",
+        COALESCE(
+            const_1050.constant_text, '{null_value}'
+        ) AS "Ссылка на документы в ЛК"
     FROM
         claims AS cl
     LEFT JOIN (
@@ -87,6 +90,9 @@ def select_claims(
     LEFT JOIN
         constants AS const_1000 ON const_1000.claim_id = cl.id
         AND const_1000.constant_type = 1000
+    LEFT JOIN
+        constants AS const_1050 ON const_1050.claim_id = cl.id
+        AND const_1050.constant_type = 1050
     WHERE
         cl.personal_area_id IN (
             {', '.join(map(str, personal_area_id))}
