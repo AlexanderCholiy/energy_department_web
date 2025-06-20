@@ -66,11 +66,8 @@ def select_claims(
         ) AS "Ссылка на документы в ЛК"
     FROM
         claims AS cl
-    LEFT JOIN (
-        SELECT DISTINCT ON (claim_id) *
-        FROM claims_states
-        ORDER BY claim_id, time_stamp DESC
-    ) AS st ON cl.id = st.claim_id
+    LEFT JOIN
+        claims_states AS st ON cl.id = st.claim_id
     LEFT JOIN
         personal_areas AS pa ON cl.personal_area_id = pa.id
     LEFT JOIN

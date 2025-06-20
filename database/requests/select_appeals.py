@@ -74,11 +74,8 @@ def select_appeals(
         COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры"
     FROM
         messages AS ms
-    LEFT JOIN (
-        SELECT DISTINCT ON (message_id) *
-        FROM messages_states
-        ORDER BY message_id, time_stamp DESC
-    ) AS st ON ms.id = st.message_id
+    LEFT JOIN
+        messages_states AS st ON ms.id = st.message_id
     LEFT JOIN
         personal_areas AS pa ON ms.personal_area_id = pa.id
     LEFT JOIN
