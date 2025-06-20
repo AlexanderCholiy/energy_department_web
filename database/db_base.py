@@ -79,6 +79,9 @@ def sql_queries(
                     connection.commit()
                     return True
 
+    except KeyboardInterrupt:
+        raise
+
     except Exception as e:
         print(
             Fore.RED + Style.DIM +

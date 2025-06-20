@@ -88,6 +88,9 @@ async def get_current_user(
     except JWTError:
         return None
 
+    except KeyboardInterrupt:
+        raise
+
     except Exception as e:
         print(f'Ошибка в {__name__}:\n{str(e)}')
         return None

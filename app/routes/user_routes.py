@@ -66,6 +66,9 @@ async def update_profile(
     try:
         db.commit()
         db.refresh(user_data)
+    except KeyboardInterrupt:
+        db.rollback()
+        raise
     except Exception:
         db.rollback()
         return set_error_message(

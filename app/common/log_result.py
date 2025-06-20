@@ -32,6 +32,8 @@ def log_result(func_name: str, add_info: str = 'NaN') -> Callable:
 
             try:
                 result = func(*args, **kwargs)
+            except KeyboardInterrupt:
+                raise
             except Exception as e:
                 error_msg = str(e)
                 print(
