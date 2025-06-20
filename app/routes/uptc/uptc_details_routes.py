@@ -63,7 +63,8 @@ async def details_uptc(
         table_claims = sql_queries(
             select_claims(
                 null_value=NULL_VALUE,
-                claim_id=number_id
+                claim_id=number_id,
+                detail=True
             ), 'tech_pris'
         )
 
@@ -83,7 +84,8 @@ async def details_uptc(
         table_appeals = sql_queries(
             select_appeals(
                 null_value=NULL_VALUE,
-                appeal_id=number_id
+                appeal_id=number_id,
+                detail=True
             ), 'tech_pris'
         )
 

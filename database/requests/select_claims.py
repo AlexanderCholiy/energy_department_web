@@ -15,7 +15,8 @@ def select_claims(
     claim_id: Optional[int] = None,
     claim_number: Optional[int] = None,
     declarant_name: Optional[str] = None,
-    personal_area_name: Optional[str] = None
+    personal_area_name: Optional[str] = None,
+    detail: bool = False
 ) -> str:
     """Этот запрос также используется для отправки данных в json формате."""
 
@@ -40,6 +41,20 @@ def select_claims(
         )
     else:
         where_clause_claims = ''
+
+    if detail:
+        status_join = ('''
+        LEFT JOIN
+            claims_states AS st ON cl.id = st.claim_id
+        ''')
+    else:
+        status_join = ('''
+        LEFT JOIN (
+            SELECT DISTINCT ON (claim_id) *
+            FROM claims_states
+            ORDER BY claim_id, time_stamp DESC
+        ) AS st ON cl.id = st.claim_id
+        ''')
 
     return (f'''
     SELECT
@@ -66,8 +81,7 @@ def select_claims(
         ) AS "Ссылка на документы в ЛК"
     FROM
         claims AS cl
-    LEFT JOIN
-        claims_states AS st ON cl.id = st.claim_id
+    {status_join}
     LEFT JOIN
         personal_areas AS pa ON cl.personal_area_id = pa.id
     LEFT JOIN

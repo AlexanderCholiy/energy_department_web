@@ -16,7 +16,8 @@ def select_appeals(
     appeal_id: Optional[int] = None,
     claim_number: Optional[int] = None,
     declarant_name: Optional[str] = None,
-    personal_area_name: Optional[str] = None
+    personal_area_name: Optional[str] = None,
+    detail: bool = False
 ) -> str:
     """Этот запрос также используется для отправки данных в json формате."""
 
@@ -43,6 +44,20 @@ def select_appeals(
         )
     else:
         where_clause_appeals = ''
+
+    if detail:
+        status_join = ('''
+        LEFT JOIN
+            messages_states AS st ON ms.id = st.message_id
+        ''')
+    else:
+        status_join = ('''
+        LEFT JOIN (
+            SELECT DISTINCT ON (message_id) *
+            FROM messages_states
+            ORDER BY message_id, time_stamp DESC
+        ) AS st ON ms.id = st.message_id
+        ''')
 
     return (f'''
     SELECT
@@ -74,8 +89,7 @@ def select_appeals(
         COALESCE(const_1000.constant_text, '{null_value}') AS "Шифр опоры"
     FROM
         messages AS ms
-    LEFT JOIN
-        messages_states AS st ON ms.id = st.message_id
+    {status_join}
     LEFT JOIN
         personal_areas AS pa ON ms.personal_area_id = pa.id
     LEFT JOIN
